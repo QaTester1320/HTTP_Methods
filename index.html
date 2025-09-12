@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GET vs POST (and HTTP Methods)</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+  header {
+    background: #4CAF50;
+    color: white;
+    padding: 20px;
+  }
+  h1 {
+    margin: 0;
+  }
+  .methods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px;
+  }
+  .card {
+    background: white;
+    padding: 20px;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .card h3 {
+    margin-top: 0;
+  }
+  .activity, .quiz {
+    background: #ffffff;
+    margin: 30px auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  button {
+    padding: 10px 20px;
+    margin: 5px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #45a049;
+  }
+  footer {
+    background: #333;
+    color: white;
+    padding: 10px;
+    margin-top: 30px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Learn HTTP Methods the Fun Way!</h1>
+  <p>GET, POST, PUT, DELETE explained simply 🎉</p>
+</header>
+
+<!-- Explanation Cards -->
+<div class="methods">
+  <div class="card">
+    <h3>GET</h3>
+    <p>📥 Used to request data from a server. (Like reading info)</p>
+  </div>
+  <div class="card">
+    <h3>POST</h3>
+    <p>📤 Used to send data to a server. (Like submitting a form)</p>
+  </div>
+  <div class="card">
+    <h3>PUT</h3>
+    <p>♻️ Used to update or replace existing data.</p>
+  </div>
+  <div class="card">
+    <h3>DELETE</h3>
+    <p>🗑️ Used to delete data on the server.</p>
+  </div>
+  <div class="card">
+    <h3>PATCH</h3>
+    <p>📝 Used to partially update data.</p>
+  </div>
+</div>
+
+<!-- Activity -->
+<div class="activity">
+  <h2>Drag & Match Activity</h2>
+  <p>Match the HTTP Method to its action:</p>
+  <p><strong>(This is a simple clickable version)</strong></p>
+  <button onclick="alert('Correct! GET = Request Data')">GET → Request Data</button>
+  <button onclick="alert('Correct! POST = Send Data')">POST → Send Data</button>
+  <button onclick="alert('Correct! DELETE = Remove Data')">DELETE → Remove Data</button>
+</div>
+
+<!-- Quiz Game -->
+<div class="quiz">
+  <h2>Mini Quiz Game 🎮</h2>
+  <p id="question">Which method sends data to the server?</p>
+  <button onclick="checkAnswer('GET')">GET</button>
+  <button onclick="checkAnswer('POST')">POST</button>
+  <button onclick="checkAnswer('DELETE')">DELETE</button>
+  <p id="feedback"></p>
+</div>
+
+<footer>
+  <p>Made with ❤️ to learn HTTP</p>
+</footer>
+
+<script>
+let questionIndex = 0;
+const questions = [
+  {q: "Which method sends data to the server?", answer: "POST"},
+  {q: "Which method requests data from the server?", answer: "GET"},
+  {q: "Which method deletes data?", answer: "DELETE"}
+];
+
+function checkAnswer(choice) {
+  const correct = questions[questionIndex].answer;
+  const feedback = document.getElementById('feedback');
+  if (choice === correct) {
+    feedback.innerText = "✅ Correct!";
+  } else {
+    feedback.innerText = "❌ Oops! Try again.";
+    return;
+  }
+  // Next question after short delay
+  setTimeout(() => {
+    questionIndex++;
+    if (questionIndex < questions.length) {
+      document.getElementById('question').innerText = questions[questionIndex].q;
+      feedback.innerText = "";
+    } else {
+      document.getElementById('question').innerText = "🎉 You finished the quiz!";
+      feedback.innerText = "";
+    }
+  }, 1000);
+}
+</script>
+</body>
+</html>

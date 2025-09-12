@@ -180,4 +180,133 @@
     <section>
       <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Other HTTP Heroes</h2>
       <ul class="space-y-4 text-lg text-gray-700 dark:text-gray-300">
-        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow
+        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow-sm flex items-center">
+          <span class="mr-3 text-2xl">🔄</span><strong>PUT:</strong> Replace a whole resource (like rewriting your grocery list).
+        </li>
+        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow-sm flex items-center">
+          <span class="mr-3 text-2xl">⚡️</span><strong>PATCH:</strong> Update part of a resource (like fixing one item).
+        </li>
+        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow-sm flex items-center">
+          <span class="mr-3 text-2xl">❌</span><strong>DELETE:</strong> Remove a resource permanently.
+        </li>
+        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow-sm flex items-center">
+          <span class="mr-3 text-2xl">📋</span><strong>HEAD:</strong> Check headers without downloading everything.
+        </li>
+      </ul>
+    </section>
+
+    <footer class="text-center mt-12 text-gray-500 text-sm dark:text-gray-400">
+      <p>Made with ❤️ and an understanding of HTTP.</p>
+    </footer>
+  </div>
+
+  <script>
+    const requests = [
+      { type: 'GET', text: 'A customer wants to see the list of all available products.' },
+      { type: 'POST', text: 'A customer wants to submit a new review for a product.' },
+      { type: 'PUT', text: 'A customer wants to completely replace their profile information with a new set.' },
+      { type: 'DELETE', text: 'A customer wants to delete their account.' },
+      { type: 'PATCH', text: 'A customer wants to change only their email address on their profile.' },
+      { type: 'GET', text: 'A customer wants to view the details of a specific product.' },
+      { type: 'HEAD', text: 'The browser wants to check if a product image exists before loading the full page.' },
+      { type: 'POST', text: 'A customer wants to create a new order with items in their cart.' },
+      { type: 'PUT', text: 'A customer wants to completely update an existing blog post.' },
+      { type: 'DELETE', text: 'A customer wants to remove a photo from their gallery.' },
+      { type: 'PATCH', text: 'A customer wants to update the quantity of one item in their shopping cart.' },
+      { type: 'GET', text: 'A customer wants to search for products using a keyword.' },
+      { type: 'HEAD', text: 'The browser wants to get the size of a document to check if it has changed.' },
+    ];
+
+    let currentRequests = [];
+    let score = 0;
+    let total = 0;
+    let currentQuestionIndex = 0;
+
+    const requestTextEl = document.getElementById('request-text');
+    const scoreTextEl = document.getElementById('score-text');
+    const feedbackMessageEl = document.getElementById('feedback-message');
+    const gameCardEl = document.querySelector('#game-container .game-card');
+    const playAgainBtn = document.getElementById('play-again-btn');
+    const methodButtons = document.getElementById('method-buttons');
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function startGame() {
+      score = 0;
+      total = 0;
+      currentQuestionIndex = 0;
+      currentRequests = [...requests];
+      shuffleArray(currentRequests);
+      updateScoreDisplay();
+      requestTextEl.textContent = "Click a button to start the game!";
+      feedbackMessageEl.style.opacity = '0';
+      gameCardEl.classList.add('pulse-anim');
+      methodButtons.querySelectorAll('.btn-game').forEach(btn => btn.disabled = false);
+      playAgainBtn.classList.add('hidden');
+    }
+
+    function displayNextRequest() {
+      if (currentQuestionIndex >= currentRequests.length) {
+        endGame();
+        return;
+      }
+      requestTextEl.textContent = currentRequests[currentQuestionIndex].text;
+      gameCardEl.classList.add('pulse-anim');
+      feedbackMessageEl.style.opacity = '0';
+    }
+
+    function updateScoreDisplay() {
+      scoreTextEl.textContent = `Score: ${score} / ${total}`;
+    }
+
+    function endGame() {
+      requestTextEl.textContent = `Game Over! Your final score is ${score} out of ${total}.`;
+      feedbackMessageEl.textContent = "Want to try again?";
+      feedbackMessageEl.className = 'text-lg font-bold mt-2 text-blue-600 opacity-100';
+      gameCardEl.classList.remove('pulse-anim');
+      methodButtons.querySelectorAll('.btn-game').forEach(btn => btn.disabled = true);
+      playAgainBtn.classList.remove('hidden');
+    }
+
+    function handleGuess(event) {
+      const clickedButton = event.target.closest('.btn-game');
+      if (!clickedButton || clickedButton.disabled || currentQuestionIndex >= currentRequests.length) return;
+
+      const userGuess = clickedButton.dataset.method;
+      const correctMethod = currentRequests[currentQuestionIndex].type;
+      total++;
+      gameCardEl.classList.remove('pulse-anim');
+
+      if (userGuess === correctMethod) {
+        score++;
+        feedbackMessageEl.textContent = 'Correct! Great job.';
+        feedbackMessageEl.className = 'text-lg font-bold mt-2 text-green-600 opacity-100';
+        clickedButton.classList.add('correct-btn');
+      } else {
+        feedbackMessageEl.textContent = `Incorrect! The correct method was ${correctMethod}.`;
+        feedbackMessageEl.className = 'text-lg font-bold mt-2 text-red-600 opacity-100';
+        clickedButton.classList.add('incorrect-btn');
+      }
+
+      updateScoreDisplay();
+      methodButtons.querySelectorAll('.btn-game').forEach(btn => btn.disabled = true);
+
+      setTimeout(() => {
+        clickedButton.classList.remove('correct-btn', 'incorrect-btn');
+        methodButtons.querySelectorAll('.btn-game').forEach(btn => btn.disabled = false);
+        currentQuestionIndex++;
+        displayNextRequest();
+      }, 1500);
+    }
+
+    methodButtons.addEventListener('click', handleGuess);
+    playAgainBtn.addEventListener('click', startGame);
+    window.onload = startGame;
+  </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🕹️ Fun HTTP Methods Playground & Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(120deg,#f5f7fa,#c3cfe2);margin:0;}
+    h1 {color:#3366cc;text-align:center;margin-top:30px;letter-spacing:1px;font-size:2.3em;}
+    h2 {color:#354c7c;margin-top:20px;}
+    .section {max-width:650px;margin:35px auto 0 auto;background:rgba(255,255,255,0.73);border-radius:18px;padding:22px 15px 25px 15px;box-shadow:0px 8px 26px #acccdd44;}
+    .methods {display:flex;flex-wrap:wrap;gap:19px;justify-content:center;margin:28px 0 12px 0;}
+    .card {background:white;border-radius:16px;box-shadow:0px 6px 18px #aaccdd77;padding:22px;width:260px;max-width:96vw;transition:transform 0.15s;}
+    .card:hover {transform:scale(1.06) rotate(-2deg);box-shadow:0px 14px 30px #aaccdd88;}
+    .card h2 {color:#28a745;font-size:1.3em;margin-bottom:8px;}
+    .card p {color:#333;margin-bottom:10px;font-size:1.07em;}
+    button {background:#3366cc;color:white;border:none;border-radius:5px;padding:7px 17px;cursor:pointer;font-size:1em;font-weight:bold;margin:7px 3px 2px 0;box-shadow:0px 2px 8px #3366cc33;transition:background 0.12s;}
+    button:active {background:#2853a0;}
+    .badge {background:#ffe911;border-radius:50px;color:#222;font-weight:bold;padding:3px 10px;font-size:0.93em;display:inline-block;margin-left:2px;}
+    .example {font-size:0.97em;color:#cc7700;}
+    #feedback {margin-top:14px;font-weight:bold;color:#da5348;text-align:center;min-height:22px;font-size:1.07em;}
+    #gameArea {background:#f6f6ff;border-radius:18px;padding:28px;max-width:510px;margin:36px auto 30px auto;box-shadow:0px 8px 22px #9999cc44;text-align:center;}
+    #scenario {font-size:1.13em;margin-bottom:17px;color:#354c7c;}
+    #choices button {margin:7px 9px;}
+    #gameFeedback {font-weight:bold;color:#28a745;margin-top:18px;font-size:1.05em;min-height:28px;}
+    .mini-game {margin:30px auto 12px auto;padding:20px;max-width:440px;background:#e7f7ff;border-radius:14px;box-shadow:0 4px 14px #bbddeee2;}
+    .mini-game h2 {margin-top:3px;}
+    @media (max-width: 700px) {.methods{gap:12px;}.card{width:97vw;}h1,h2{font-size:1.18em;}.section{padding:12px;}}
+  </style>
+</head>
+<body>
+
+<h1>🕹️ HTTP Methods Playground & Learning Games</h1>
+
+<div class="section">
+  <h2>🔎 What is HTTP?</h2>
+  <p>
+    HTTP is how browsers and servers talk to each other using different <b>methods</b> (GET, POST, etc.). Learn and play below to master their real-world uses in a fun way!
+  </p>
+</div>
+
+<div class="section">
+  <h2>⚙️ Explore HTTP Methods</h2>
+  <div class="methods">
+    <div class="card">
+      <h2>GET <span class="badge">Popular!</span></h2>
+      <p>Fetch data<br><span class="example">Ex: See menu</span></p>
+      <button onclick="showFeedback('GET: Like peeking at the menu! You fetch info without changing it.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>POST</h2>
+      <p>Send new data<br><span class="example">Ex: Place an order</span></p>
+      <button onclick="showFeedback('POST: Like placing an order for pizza! Sends your data to the server.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>PUT</h2>
+      <p>Replace/update<br><span class="example">Ex: Change order</span></p>
+      <button onclick="showFeedback('PUT: Like swapping your meal for a new one! Replace all old data.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>DELETE</h2>
+      <p>Remove data<br><span class="example">Ex: Cancel order</span></p>
+      <button onclick="showFeedback('DELETE: Like telling the waiter to cancel your pizza! Remove data.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>OPTIONS</h2>
+      <p>Ask what's allowed<br><span class="example">Ex: Ask for veggie options</span></p>
+      <button onclick="showFeedback('OPTIONS: Like asking the chef what you can order! Reveal possibilities.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>HEAD</h2>
+      <p>Get only info<br><span class="example">Ex: Menu size</span></p>
+      <button onclick="showFeedback('HEAD: Like asking about the menu size, but not seeing the food! Only info.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>CONNECT</h2>
+      <p>Start tunnel<br><span class="example">Ex: VIP passage</span></p>
+      <button onclick="showFeedback('CONNECT: Sneak to VIP lounge via secure tunnel! For HTTPS.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>TRACE</h2>
+      <p>Echo back<br><span class="example">Ex: Network echo</span></p>
+      <button onclick="showFeedback('TRACE: Like sending a message and getting an echo! Used for debugging.')">Try</button>
+    </div>
+  </div>
+  <div id="feedback"></div>
+</div>
+
+<!-- Adventure Game -->
+<div class="section" id="gameArea">
+  <h2>🎲 HTTP Adventure Game</h2>
+  <div id="scenario"><b>Scenario:</b> You’re at a digital restaurant. Choose actions to solve fun challenges!</div>
+  <div id="choices">
+    <button onclick="playGame('GET')">Look at the menu</button>
+    <button onclick="playGame('POST')">Order food</button>
+    <button onclick="playGame('PUT')">Change my order</button>
+    <button onclick="playGame('DELETE')">Cancel my order</button>
+    <button onclick="playGame('OPTIONS')">Ask for vegan options</button>
+    <button onclick="playGame('HEAD')">Check menu size</button>
+    <button onclick="playGame('CONNECT')">Visit VIP lounge</button>
+    <button onclick="playGame('TRACE')">Send network echo</button>
+  </div>
+  <div id="gameFeedback"></div>
+  <button style="margin-top:24px;" onclick="nextChallenge()">Next Challenge ⏩</button>
+  <div style="margin-top:12px; font-size:0.98em; color:#888;">Tip: After answering, click "Next Challenge" for the next scenario!</div>
+</div>
+
+<!-- Mini-games START -->
+
+<!-- 1. Drag & Drop HTTP Match -->
+<div class="mini-game" id="dragdrop-game">
+  <h2>🎯 Drag &amp; Drop HTTP Match</h2>
+  <div style="display:flex;justify-content:space-between;">
+    <div>
+      <div draggable="true" ondragstart="dragStart(event)" id="get" style="background:#cdf; border-radius:6px; padding:7px 16px; margin-bottom:6px; cursor:grab;">GET</div>
+      <div draggable="true" ondragstart="dragStart(event)" id="post" style="background:#fcd; border-radius:6px; padding:7px 16px; margin-bottom:6px; cursor:grab;">POST</div>
+      <div draggable="true" ondragstart="dragStart(event)" id="delete" style="background:#dfd; border-radius:6px; padding:7px 16px; margin-bottom:6px; cursor:grab;">DELETE</div>
+    </div>
+    <div>
+      <div ondrop="drop(event,'get')" ondragover="allowDrop(event)" style="background:#fff8dc; border-radius:6px; padding:7px 16px; margin-bottom:6px;">Look at menu</div>
+      <div ondrop="drop(event,'post')" ondragover="allowDrop(event)" style="background:#fff8dc; border-radius:6px; padding:7px 16px; margin-bottom:6px;">Order food</div>
+      <div ondrop="drop(event,'delete')" ondragover="allowDrop(event)" style="background:#fff8dc; border-radius:6px; padding:7px 16px; margin-bottom:6px;">Cancel order</div>
+    </div>
+  </div>
+  <div id="dragdrop-feedback" style="margin-top:12px;"></div>
+</div>
+
+<!-- 2. Method Picker (Clicker Game) -->
+<div class="mini-game" id="method-picker-game">
+  <h2>⚡ Fast HTTP Picker</h2>
+  <div id="picker-challenge"></div>
+  <div id="picker-buttons"></div>
+  <div id="picker-feedback" style="margin-top:9px;"></div>
+</div>
+
+<!-- 3. HTTP Method Race -->
+<div class="mini-game" id="httprace-game">
+  <h2>🏁 HTTP Race</h2>
+  <div id="race-status">Who gets data quickest?</div>
+  <button onclick="raceAnswer('GET')">GET</button>
+  <button onclick="raceAnswer('POST')">POST</button>
+  <button onclick="raceAnswer('TRACE')">TRACE</button>
+  <div id="race-feedback" style="margin-top:8px;"></div>
+</div>
+
+<!-- 4. Find the Method (Search Game) -->
+<div class="mini-game" id="find-method-game">
+  <h2>🔍 Find the HTTP Method!</h2>
+  <div id="find-challenge">You want to check the file size before download. Which HTTP method do you use?</div>
+  <div>
+    <button onclick="findMethod('GET')">GET</button>
+    <button onclick="findMethod('POST')">POST</button>
+    <button onclick="findMethod('HEAD')">HEAD</button>
+  </div>
+  <div id="find-feedback" style="margin-top:10px;"></div>
+</div>
+
+<!-- 5. HTTP Hot Potato (TRACE) -->
+<div class="mini-game" id="hotpotato-game" style="background:#dafff7;">
+  <h2>🕺 HTTP Hot Potato (TRACE)</h2>
+  <div id="potato-status">Pass the message along!</div>
+  <input id="potato-input" type="text" placeholder="Type message" style="margin:5px;">
+  <button onclick="passPotato()">Send via TRACE</button>
+  <div id="potato-feedback" style="margin-top:10px;"></div>
+</div>
+
+<!-- 6. HTTP Tunnel Challenge (CONNECT) -->
+<div class="mini-game" id="tunnel-game" style="background:#e7eaff;">
+  <h2>🔒 HTTP Tunnel (CONNECT)</h2>
+  <div id="tunnel-status">Your goal: get to the VIP lounge!</div>
+  <button onclick="tunnelConnect()">Start Tunnel</button>
+  <div id="tunnel-feedback" style="margin-top:10px;"></div>
+</div>
+
+<!-- Mini-games END -->
+
+<script>
+/* Methods cards feedback */
+function showFeedback(msg) {
+  document.getElementById('feedback').textContent = msg;
+}
+
+/* Adventure Game */
+let challenges = [
+  {text: "A waiter approaches. See the menu.", method: "GET", correct: "GET: You peek at the menu and see all dishes!", wrong: "Try looking at the menu (GET)!"},
+  {text: "Ready to eat? Send your meal order.", method: "POST", correct: "POST: Order placed! The kitchen starts cooking.", wrong: "No food delivered. You must POST your order!"},
+  {text: "Oops! Want to cancel your food?", method: "DELETE", correct: "DELETE: Your order deleted. Waiter nods!", wrong: "They can't cancel without a DELETE. Try again!"},
+  {text: "Feeling healthy? Ask which vegan meals are available.", method: "OPTIONS", correct: "OPTIONS: Chef shows ‘Salad’, ‘Soup’, ‘Fruit Plate’.", wrong: "Use OPTIONS to ask what's allowed. Try again!"},
+  {text: "Check menu file size before downloading.", method: "HEAD", correct: "HEAD: Got the menu size in bytes, not the food.", wrong: "HEAD gives only details. Try again!"},
+  {text: "Sneak through to the VIP lounge—need a tunnel!", method: "CONNECT", correct: "CONNECT: Passed security and entered VIP room with a secure tunnel!", wrong: "Only CONNECT opens tunnels. Try again!"},
+  {text: "Send network message, see its echo.", method: "TRACE", correct: "TRACE: Your message is echoed back for debugging.", wrong: "TRACE sends an echo—try that!"},
+  {text: "Change your pizza order to pasta.", method: "PUT", correct: "PUT: The chef swaps pizza for pasta!", wrong: "PUT is for changing orders. Try again!"}
+];
+let currentChallenge = 0;
+function playGame(method) {
+  let chal = challenges[currentChallenge];
+  if (method === chal.method) {
+    document.getElementById('gameFeedback').textContent = chal.correct + " 🎉";
+  } else {
+    document.getElementById('gameFeedback').textContent = chal.wrong;
+  }
+}
+function nextChallenge() {
+  currentChallenge++;
+  if (currentChallenge >= challenges.length) {
+    document.getElementById('scenario').innerHTML = "<b>Adventure complete!</b> You’re now an HTTP Hero!";
+    document.getElementById('choices').style.display = 'none';
+    document.getElementById('gameFeedback').textContent = "";
+  } else {
+    document.getElementById('scenario').textContent = challenges[currentChallenge].text;
+    document.getElementById('gameFeedback').textContent = '';
+  }
+}
+
+/* Drag & Drop Match Game */
+function allowDrop(ev) { ev.preventDefault(); }
+function dragStart(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+function drop(ev, matchId) {
+  ev.preventDefault();
+  let data = ev.dataTransfer.getData("text");
+  let feedback = document.getElementById("dragdrop-feedback");
+  if(data === matchId) {
+    feedback.textContent = "✅ Correct Match!";
+  } else {
+    feedback.textContent = "❌ Try Again!";
+  }
+}
+
+/* Method Picker Game */
+let challenges2 = [
+  {text: "Fetch homepage info", answer: "GET"},
+  {text: "Submit a comment", answer: "POST"},
+  {text: "Update your info", answer: "PUT"},
+  {text: "Delete your account", answer: "DELETE"},
+  {text: "Ask permissions", answer: "OPTIONS"}
+];
+let curr2 = 0;
+function showPickerChallenge() {
+  let q = challenges2[curr2];
+  document.getElementById('picker-challenge').textContent = q.text;
+  let methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS"];
+  document.getElementById('picker-buttons').innerHTML = methods.map(m =>
+    `<button onclick="pickMethod('${m}')">${m}</button>`).join(' ');
+}
+function pickMethod(selected) {
+  let ans = challenges2[curr2].answer;
+  let fb = document.getElementById('picker-feedback');
+  if(selected === ans){
+    fb.textContent = "🎉 Correct!";
+    curr2++;
+    if(curr2 < challenges2.length) {
+      setTimeout(showPickerChallenge, 650);
+    } else {
+      fb.textContent = "🏆 All finished!";
+      document.getElementById('picker-buttons').innerHTML = "";
+      document.getElementById('picker-challenge').innerHTML = "";
+    }
+  } else {
+    fb.textContent = "❌ Try again!";
+  }
+}
+showPickerChallenge();
+
+/* HTTP Race */
+function raceAnswer(method) {
+  let fb = document.getElementById('race-feedback');
+  if(method === "GET") {
+    fb.textContent = "🚀 GET wins the data race!";
+  } else if(method === "POST") {
+    fb.textContent = "POST is slower, must process form!";
+  } else {
+    fb.textContent = "TRACE is for debugging, not a race!";
+  }
+}
+
+/* Find the Method Game */
+function findMethod(method) {
+  let fb = document.getElementById('find-feedback');
+  if(method === "HEAD") {
+    fb.textContent = "✔️ HEAD gets info without the content!";
+  } else {
+    fb.textContent = "🙅 Incorrect, try again!";
+  }
+}
+
+/* Hot Potato Game */
+function passPotato() {
+  let msg = document.getElementById('potato-input').value;
+  if(msg.trim() !== "") {
+    document.getElementById('potato-feedback').textContent = "🔄 TRACE Echo: " + msg;
+  } else {
+    document.getElementById('potato-feedback').textContent = "Please enter a message.";
+  }
+}
+
+/* Tunnel Game */
+function tunnelConnect() {
+  document.getElementById('tunnel-feedback').textContent = "🎉 Tunnel built! You entered VIP via CONNECT!";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTTP Heroes: GET vs. POST</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Enable dark mode -->
+  <script>
+    tailwind.config = {
+      darkMode: 'media',
+    }
+  </script>
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f0f4f8;
+    }
+
+    .container-card {
+      background-color: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+                  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      padding: 2.5rem;
+      margin: 2rem auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card {
+      min-height: 10rem;
+      transition: background 0.3s ease;
+    }
+
+    .btn-game {
+      background-color: #3b82f6;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out, background-color 0.2s;
+    }
+
+    .btn-game:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      background-color: #2563eb;
+    }
+
+    .btn-game:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .correct-btn {
+      background-color: #10b981 !important;
+      transform: scale(1.1);
+      color: white;
+    }
+
+    .incorrect-btn {
+      background-color: #ef4444 !important;
+      transform: scale(0.95);
+      color: white;
+    }
+
+    .pulse-anim {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+    }
+
+    #feedback-message {
+      transition: opacity 0.5s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4">
+
+  <div class="container-card max-w-5xl">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-green-500/10 -z-10"></div>
+
+    <header class="text-center mb-12">
+      <h1 class="text-5xl font-extrabold text-blue-800 tracking-tight dark:text-blue-300">HTTP Heroes: GET vs. POST</h1>
+      <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">Master the basics of web communication, the fun way!</p>
+    </header>
+
+    <!-- The Web Restaurant -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">The Web Restaurant</h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+        Imagine the internet is a restaurant. Your web browser is the customer, and a website's server is the waiter and kitchen. The language they use to communicate is HTTP. When you visit a website, you're making an HTTP request!
+      </p>
+    </section>
+
+    <!-- GET vs POST -->
+    <section class="mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">The Main Characters: GET and POST</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- GET -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-xl shadow-md transition transform hover:scale-105 dark:bg-blue-900/20">
+          <h3 class="text-2xl font-semibold text-blue-700 dark:text-blue-300 mb-2 flex items-center">
+            <span class="mr-2 text-3xl">➡️</span> GET
+          </h3>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            GET is like asking the waiter for the menu. You're just requesting information. It's visible in the URL like an open menu.
+          </p>
+          <ul class="mt-4 text-sm text-gray-600 dark:text-gray-400 space-y-2">
+            <li>✔️ Visible in the URL</li>
+            <li>✔️ No data body</li>
+            <li>✔️ Safe and idempotent</li>
+          </ul>
+        </div>
+
+        <!-- POST -->
+        <div class="bg-purple-50 border-l-4 border-purple-500 p-6 rounded-xl shadow-md transition transform hover:scale-105 dark:bg-purple-900/20">
+          <h3 class="text-2xl font-semibold text-purple-700 dark:text-purple-300 mb-2 flex items-center">
+            <span class="mr-2 text-3xl">📦</span> POST
+          </h3>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+            POST is like placing a new order. You're sending new information to the kitchen. It’s hidden in the request body like a private order slip.
+          </p>
+          <ul class="mt-4 text-sm text-gray-600 dark:text-gray-400 space-y-2">
+            <li>❌ Not visible in the URL</li>
+            <li>✔️ Has a data body</li>
+            <li>❌ Not idempotent</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game -->
+    <section class="text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-inner mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">The HTTP Supermarket Game</h2>
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+        Welcome, Server Manager! Your job is to handle customer requests. Choose the right HTTP method.
+      </p>
+
+      <div id="game-container" class="space-y-6">
+        <div class="game-card bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md flex items-center justify-center pulse-anim">
+          <p id="request-text" class="text-xl font-semibold text-gray-800 dark:text-white">Ready to play? Let's go!</p>
+        </div>
+
+        <div id="method-buttons" class="flex flex-wrap justify-center gap-4">
+          <button class="btn-game" data-method="GET">GET</button>
+          <button class="btn-game" data-method="POST">POST</button>
+          <button class="btn-game" data-method="PUT">PUT</button>
+          <button class="btn-game" data-method="DELETE">DELETE</button>
+          <button class="btn-game" data-method="PATCH">PATCH</button>
+          <button class="btn-game" data-method="HEAD">HEAD</button>
+        </div>
+
+        <div class="mt-4">
+          <p id="score-text" class="text-lg font-bold text-gray-700 dark:text-gray-200">Score: 0 / 0</p>
+          <div id="feedback-message" class="text-lg font-bold mt-2 opacity-0 transition-opacity duration-500"></div>
+        </div>
+        <button id="play-again-btn" class="btn-game hidden mx-auto mt-4">Play Again!</button>
+      </div>
+    </section>
+
+    <!-- Other Methods -->
+    <section>
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Other HTTP Heroes</h2>
+      <ul class="space-y-4 text-lg text-gray-700 dark:text-gray-300">
+        <li class="p-4 rounded-lg bg-gray-100 dark:bg-gray-700 shadow

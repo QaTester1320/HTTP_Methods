@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🕹️ Fun HTTP Methods Playground & Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+
+.section {
+    max-width: 1500px !important;
+    margin: 35px auto 0 auto;
+    background: rgba(255,255,255,0.73);
+    border-radius: 18px;
+    padding: 22px 15px 25px 15px;
+    box-shadow: 0px 8px 26px #acccdd44;
+}
+
+#gameArea {
+    background: #f6f6ff;
+    border-radius: 18px;
+    padding: 28px;
+    max-width: 1000px !important;
+    margin: 36px auto 30px auto;
+    box-shadow: 0px 8px 22px #9999cc44;
+    text-align: center;
+}
+
+.mini-game {
+    margin: 30px auto 12px auto;
+    padding: 20px;
+    max-width: 1000px !important;
+    background: #e7f7ff;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px #bbddeee2;
+}
+
+
+
+
+    body {font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(120deg,#f5f7fa,#c3cfe2);margin:0;}
+    h1 {color:#3366cc;text-align:center;margin-top:30px;letter-spacing:1px;font-size:2.3em;}
+    h2 {color:#354c7c;margin-top:20px;}
+    .section {max-width:650px;margin:35px auto 0 auto;background:rgba(255,255,255,0.73);border-radius:18px;padding:22px 15px 25px 15px;box-shadow:0px 8px 26px #acccdd44;}
+    .methods {display:flex;flex-wrap:wrap;gap:19px;justify-content:center;margin:28px 0 12px 0;}
+    .card {background:white;border-radius:16px;box-shadow:0px 6px 18px #aaccdd77;padding:22px;width:260px;max-width:96vw;transition:transform 0.15s;}
+    .card:hover {transform:scale(1.06) rotate(-2deg);box-shadow:0px 14px 30px #aaccdd88;}
+    .card h2 {color:#28a745;font-size:1.3em;margin-bottom:8px;}
+    .card p {color:#333;margin-bottom:10px;font-size:1.07em;}
+    button {background:#3366cc;color:white;border:none;border-radius:5px;padding:7px 17px;cursor:pointer;font-size:1em;font-weight:bold;margin:7px 3px 2px 0;box-shadow:0px 2px 8px #3366cc33;transition:background 0.12s;}
+    button:active {background:#2853a0;}
+    .badge {background:#ffe911;border-radius:50px;color:#222;font-weight:bold;padding:3px 10px;font-size:0.93em;display:inline-block;margin-left:2px;}
+    .example {font-size:0.97em;color:#cc7700;}
+    #feedback {margin-top:14px;font-weight:bold;color:#da5348;text-align:center;min-height:22px;font-size:1.07em;}
+    #gameArea {background:#f6f6ff;border-radius:18px;padding:28px;max-width:510px;margin:36px auto 30px auto;box-shadow:0px 8px 22px #9999cc44;text-align:center;}
+    #scenario {font-size:1.13em;margin-bottom:17px;color:#354c7c;}
+    #choices button {margin:7px 9px;}
+    #gameFeedback {font-weight:bold;color:#28a745;margin-top:18px;font-size:1.05em;min-height:28px;}
+    .mini-game {margin:30px auto 12px auto;padding:20px;max-width:440px;background:#e7f7ff;border-radius:14px;box-shadow:0 4px 14px #bbddeee2;}
+    .mini-game h2 {margin-top:3px;}
+    .game-score {color:#3366cc;font-weight:bold;margin-top:9px;}
+    .level-title {font-weight:bold;color:#cc536c;}
+    .disabled-btn {opacity:0.5;pointer-events:none;}
+    @media (max-width: 700px) {.methods{gap:12px;}.card{width:97vw;}h1,h2{font-size:1.18em;}.section{padding:12px;}}
+  </style>
+</head>
+<body>
+<h1>🕹️ HTTP Methods Playground & Learning Games</h1>
+<div class="section">
+  <h2>🔎 What is HTTP?</h2>
+  <p>
+    HTTP is how browsers and servers talk using different <b>methods</b> (GET, POST, etc.). Learn and play below to master real-world uses in a fun way!
+  </p>
+</div>
+
+<!-- Comparison Table Section -->
+<div class="section">
+  <h2>🌟 HTTP Methods: Compare Like a Pro!</h2>
+  <div style="overflow-x:auto;">
+    <table style="border-collapse:collapse;width:100%;background:#f8fbff;">
+      <tr style="background:#d3e5ff;">
+        <th>Method</th>
+        <th>Real Life</th>
+        <th>Action</th>
+        <th>Safe?</th>
+        <th>Idempotent?</th>
+        <th>Security & Risk</th>
+      </tr>
+      <tr><td>GET 🚀</td><td>Look at menu</td><td>Get data only</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Don't send secrets! Shows in URL & can be cached. <span style="color:#28a745">Low risk</span></td></tr>
+      <tr><td>POST 🍔</td><td>Place food order</td><td>Send new data</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td>If not protected, hackers can spam orders. <span style="color:#d9a300">Medium</span></td></tr>
+      <tr><td>PUT ✏️</td><td>Swap meal</td><td>Replace/update</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Hackers could overwrite data/files! <span style="color:#d90000">High</span></td></tr>
+      <tr><td>DELETE 🗑️</td><td>Cancel meal</td><td>Remove data</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Must protect! Can delete records. <span style="color:#d90000">High</span></td></tr>
+      <tr><td>OPTIONS 📝</td><td>Ask for choices</td><td>Check allowed actions</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Mostly safe, but may reveal secrets to hackers. <span style="color:#d9a300">Medium</span></td></tr>
+      <tr><td>HEAD 🕵️</td><td>Just see menu size</td><td>Meta info only</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Safe, but needs same security as GET. <span style="color:#28a745">Low</span></td></tr>
+      <tr><td>CONNECT 🚪</td><td>Tunnel to VIP lounge</td><td>Open secure tunnel</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td style="color:#ef9900;font-weight:bold;">❌ No</td><td>Can be abused for attacks if not secured. <span style="color:#d90000">High</span></td></tr>
+      <tr><td>TRACE 🪞</td><td>Echo your voice</td><td>Debug/request echo</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td style="color:#28a745;font-weight:bold;">✅ Yes</td><td>Rarely used; can reveal secrets if enabled. <span style="color:#d90000">High</span></td></tr>
+    </table>
+    <div style="margin-top:14px;font-size:1em;">
+      <b>Legend:</b> 
+      <span style="color:#28a745;">Safe=No changes</span>, 
+      <span style="color:#28a745;">Idempotent=Repeatable</span>. 
+      <span style="color:#d9a300;">Medium risk=May leak info</span>.
+      <span style="color:#d90000;">High risk=needs protection!</span>
+    </div>
+    <div style="margin-top:10px;background:#fff9c6;padding:10px;border-radius:8px;">
+      <b>🍦 Fun Fact:</b> HTTP is like a restaurant: You can look, order, swap, cancel, or sneak into VIP—but always follow the rules or risk chaos!
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>⚙️ Explore HTTP Methods</h2>
+  <div class="methods">
+    <div class="card">
+      <h2>GET <span class="badge">Popular!</span></h2>
+      <p>Fetch data<br><span class="example">Ex: See menu</span></p>
+      <button onclick="showFeedback('GET: Like peeking at the menu! You fetch info without changing it.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>POST</h2>
+      <p>Send new data<br><span class="example">Ex: Place an order</span></p>
+      <button onclick="showFeedback('POST: Like placing an order for pizza! Sends your data to the server.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>PUT</h2>
+      <p>Replace/update<br><span class="example">Ex: Change order</span></p>
+      <button onclick="showFeedback('PUT: Like swapping your meal for a new one! Replace all old data.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>DELETE</h2>
+      <p>Remove data<br><span class="example">Ex: Cancel order</span></p>
+      <button onclick="showFeedback('DELETE: Like telling the waiter to cancel your pizza! Remove data.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>OPTIONS</h2>
+      <p>Ask what's allowed<br><span class="example">Ex: Ask for veggie options</span></p>
+      <button onclick="showFeedback('OPTIONS: Like asking the chef what you can order! Reveal possibilities.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>HEAD</h2>
+      <p>Get only info<br><span class="example">Ex: Menu size</span></p>
+      <button onclick="showFeedback('HEAD: Like asking about the menu size, but not seeing the food! Only info.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>CONNECT</h2>
+      <p>Start tunnel<br><span class="example">Ex: VIP passage</span></p>
+      <button onclick="showFeedback('CONNECT: Sneak to VIP lounge via secure tunnel! For HTTPS.')">Try</button>
+    </div>
+    <div class="card">
+      <h2>TRACE</h2>
+      <p>Echo back<br><span class="example">Ex: Network echo</span></p>
+      <button onclick="showFeedback('TRACE: Like sending a message and getting an echo! Used for debugging.')">Try</button>
+    </div>
+  </div>
+  <div id="feedback"></div>
+</div>
+
+<div class="section" id="gameArea">
+  <h2>🎲 HTTP Adventure Game</h2>
+  <div id="scenario"><b>Scenario:</b> You’re at a digital restaurant. Choose actions to solve fun challenges!</div>
+  <div id="choices">
+    <button onclick="playGame('GET')">Look at the menu</button>
+    <button onclick="playGame('POST')">Order food</button>
+    <button onclick="playGame('PUT')">Change my order</button>
+    <button onclick="playGame('DELETE')">Cancel my order</button>
+    <button onclick="playGame('OPTIONS')">Ask for vegan options</button>
+    <button onclick="playGame('HEAD')">Check menu size</button>
+    <button onclick="playGame('CONNECT')">Visit VIP lounge</button>
+    <button onclick="playGame('TRACE')">Send network echo</button>
+  </div>
+  <div id="gameFeedback"></div>
+  <button style="margin-top:24px;" onclick="nextChallenge()">Next Challenge ⏩</button>
+  <div style="margin-top:12px; font-size:0.98em; color:#888;">Tip: After answering, click "Next Challenge" for the next scenario!</div>
+</div>
+
+<!-- 1. Drag & Drop HTTP Match -->
+<div class="mini-game" id="dragdrop-game">
+  <h2>🎯 Drag &amp; Drop HTTP Match</h2>
+  <div class="level-title" id="dragdrop-level"></div>
+  <div style="display:flex;justify-content:space-between;" id="dragdrop-area"></div>
+  <div id="dragdrop-feedback" style="margin-top:12px;"></div>
+  <div class="game-score" id="dragdrop-score"></div>
+  <button id="dragdrop-next" style="display:none;margin-top:9px;" onclick="nextDragDropLevel()">Next Level</button>
+</div>
+
+<!-- 2. Method Picker (HTTP Life Scenarios) -->
+<div class="mini-game" id="http-life-scenarios">
+  <h2>🌍 HTTP Life Scenarios</h2>
+  <div id="scenario-stage" style="margin-bottom: 14px;"></div>
+  <div id="scenario-buttons" style="margin-bottom: 8px;"></div>
+  <div id="scenario-feedback" style="min-height:34px;color:#366;font-size:1.05em;"></div>
+  <div id="scenario-next" style="margin-top:8px;"></div>
+</div>
+
+<!-- 3. HTTP Method Race (now with levels) -->
+<div class="mini-game" id="httprace-game">
+  <h2>🏁 HTTP Race</h2>
+  <div class="level-title" id="race-level"></div>
+  <div id="race-status">Who gets data quickest?</div>
+  <div id="race-buttons"></div>
+  <div id="race-feedback" style="margin-top:8px;"></div>
+  <div class="game-score" id="race-score"></div>
+  <button id="race-next" style="display:none;margin-top:9px;" onclick="nextRaceLevel()">Next Race</button>
+</div>
+
+<!-- 4. Find the Method (Search Game) with levels -->
+<div class="mini-game" id="find-method-game">
+  <h2>🔍 Find the HTTP Method!</h2>
+  <div class="level-title" id="find-level"></div>
+  <div id="find-challenge"></div>
+  <div id="find-buttons"></div>
+  <div id="find-feedback" style="margin-top:10px;"></div>
+  <div class="game-score" id="find-score"></div>
+  <button id="find-next" style="display:none;margin-top:8px;" onclick="nextFindLevel()">Next</button>
+</div>
+
+<!-- 5. HTTP Hot Potato (TRACE) with echo levels -->
+<div class="mini-game" id="hotpotato-game" style="background:#dafff7;">
+  <h2>🕺 HTTP Hot Potato (TRACE)</h2>
+  <div class="level-title" id="potato-level"></div>
+  <div id="potato-status">Pass the message along!</div>
+  <input id="potato-input" type="text" placeholder="Type message" style="margin:5px;">
+  <button onclick="passPotato()">Send via TRACE</button>
+  <div id="potato-feedback" style="margin-top:10px;"></div>
+  <div class="game-score" id="potato-score"></div>
+  <button id="potato-next" style="display:none;margin-top:8px;" onclick="nextPotatoLevel()">Next Level</button>
+</div>
+
+<!-- 6. HTTP Tunnel Challenge (CONNECT) with levels -->
+<div class="mini-game" id="tunnel-game" style="background:#e7eaff;">
+  <h2>🔒 HTTP Tunnel (CONNECT)</h2>
+  <div class="level-title" id="tunnel-level"></div>
+  <div id="tunnel-status"></div>
+  <button id="tunnel-btn" onclick="tunnelConnect()">Start Tunnel</button>
+  <div id="tunnel-feedback" style="margin-top:10px;"></div>
+  <div class="game-score" id="tunnel-score"></div>
+  <button id="tunnel-next" style="display:none;margin-top:8px;" onclick="nextTunnelLevel()">Next Level</button>
+</div>
+
+<script>
+// Feedback for try buttons
+function showFeedback(msg) {
+  document.getElementById('feedback').textContent = msg;
+}
+
+// ----------- Adventure Game (unchanged, simple multi-level) -----------
+let challenges = [
+  {text: "A waiter approaches. See the menu.", method: "GET", correct: "GET: You peek at the menu and see all dishes!", wrong: "Try looking at the menu (GET)!"},
+  {text: "Ready to eat? Send your meal order.", method: "POST", correct: "POST: Order placed! The kitchen starts cooking.", wrong: "No food delivered. You must POST your order!"},
+  {text: "Oops! Want to cancel your food?", method: "DELETE", correct: "DELETE: Your order deleted. Waiter nods!", wrong: "They can't cancel without a DELETE. Try again!"},
+  {text: "Feeling healthy? Ask which vegan meals are available.", method: "OPTIONS", correct: "OPTIONS: Chef shows ‘Salad’, ‘Soup’, ‘Fruit Plate’.", wrong: "Use OPTIONS to ask what's allowed. Try again!"},
+  {text: "Check menu file size before downloading.", method: "HEAD", correct: "HEAD: Got the menu size in bytes, not the food.", wrong: "HEAD gives only details. Try again!"},
+  {text: "Sneak through to the VIP lounge—need a tunnel!", method: "CONNECT", correct: "CONNECT: Passed security and entered VIP room with a secure tunnel!", wrong: "Only CONNECT opens tunnels. Try again!"},
+  {text: "Send network message, see its echo.", method: "TRACE", correct: "TRACE: Your message is echoed back for debugging.", wrong: "TRACE sends an echo—try that!"},
+  {text: "Change your pizza order to pasta.", method: "PUT", correct: "PUT: The chef swaps pizza for pasta!", wrong: "PUT is for changing orders. Try again!"}
+];
+let currentChallenge = 0;
+function playGame(method) {
+  let chal = challenges[currentChallenge];
+  if (method === chal.method) {
+    document.getElementById('gameFeedback').textContent = chal.correct + " 🎉";
+  } else {
+    document.getElementById('gameFeedback').textContent = chal.wrong;
+  }
+}
+function nextChallenge() {
+  currentChallenge++;
+  if (currentChallenge >= challenges.length) {
+    document.getElementById('scenario').innerHTML = "<b>Adventure complete!</b> You’re now an HTTP Hero!";
+    document.getElementById('choices').style.display = 'none';
+    document.getElementById('gameFeedback').textContent = "";
+  } else {
+    document.getElementById('scenario').textContent = challenges[currentChallenge].text;
+    document.getElementById('gameFeedback').textContent = '';
+  }
+}
+
+// ----------- Drag & Drop Multi-Level -----------
+const dragDropLevels = [
+  {
+    drags: [{text:"GET", v:"get"}, {text:"POST", v:"post"}, {text:"DELETE", v:"delete"}],
+    drops: [
+      {label: "Look at menu", match:"get"},
+      {label:"Order food", match:"post"},
+      {label:"Cancel order", match:"delete"}
+    ]
+  },
+  {
+    drags: [{text:"OPTIONS", v:"options"}, {text:"HEAD", v:"head"}],
+    drops: [
+      {label:"Ask for allowed actions", match:"options"},
+      {label:"Check menu size only", match:"head"}
+    ]
+  },
+  {
+    drags: [{text:"CONNECT", v:"connect"}, {text:"TRACE", v:"trace"}],
+    drops: [
+      {label:"Tunnel to VIP lounge", match:"connect"},
+      {label:"Debug echo to kitchen", match:"trace"}
+    ]
+  },
+];
+let dragDropStep = 0, dragDropScore = 0, DD_state = {};
+function loadDragDropLevel() {
+  DD_state = {};
+  document.getElementById("dragdrop-level").innerHTML = `<b>Level ${dragDropStep+1}:</b>`;
+  let l = dragDropLevels[dragDropStep];
+  let left = l.drags.map(d =>
+    `<div draggable="true" ondragstart="dragStart(event)" data-dd="${d.v}" class="dd-drag" style="background:#ddf; border-radius:6px; padding:7px 16px; margin-bottom:6px; cursor:grab;">${d.text}</div>`
+  ).join('');
+  let right = l.drops.map((d,i) =>
+    `<div ondrop="dropDD(event,'${d.match}',${i})" ondragover="allowDrop(event)" data-idx="${i}" class="dd-drop" style="background:#fff8dc; min-height:24px; border-radius:6px; padding:7px 16px; margin-bottom:6px;">${d.label}${DD_state[i]?(" ➡️ "+DD_state[i].toUpperCase()):""}</div>`
+  ).join('');
+  document.getElementById("dragdrop-area").innerHTML = `<div>${left}</div><div>${right}</div>`;
+  document.getElementById("dragdrop-feedback").textContent = '';
+  document.getElementById("dragdrop-score").textContent = `Score: ${dragDropScore}`;
+  document.getElementById("dragdrop-next").style.display = "none";
+}
+function dragStart(ev) { ev.dataTransfer.setData("text", ev.target.getAttribute('data-dd')); }
+function allowDrop(ev) { ev.preventDefault(); }
+function dropDD(ev, matchId, idx) {
+  ev.preventDefault();
+  let data = ev.dataTransfer.getData("text");
+  if(!DD_state[idx]) {
+    DD_state[idx] = data;
+    loadDragDropLevel(); // update to show visually
+    let l = dragDropLevels[dragDropStep];
+    if(data === matchId) {
+      dragDropScore++;
+      document.getElementById("dragdrop-feedback").textContent = "✅ Correct!";
+    } else {
+      document.getElementById("dragdrop-feedback").textContent = "❌ Oops—try the next one!";
+    }
+    // Move to next if all filled!
+    if(Object.keys(DD_state).length === l.drops.length) {
+      document.getElementById("dragdrop-next").style.display = "";
+    }
+    document.getElementById("dragdrop-score").textContent = `Score: ${dragDropScore}`;
+  }
+}
+function nextDragDropLevel() {
+  dragDropStep++;
+  if(dragDropStep < dragDropLevels.length) {
+    loadDragDropLevel();
+  } else {
+    document.getElementById("dragdrop-area").innerHTML = "<b>You've finished all drag&drop levels!</b>";
+    document.getElementById("dragdrop-feedback").textContent = `Final Score: ${dragDropScore} / ${dragDropLevels.reduce((a,l)=>a+l.drops.length,0)}`;
+    document.getElementById("dragdrop-next").style.display = "none";
+  }
+}
+loadDragDropLevel();
+
+// ----------- Method Picker: HTTP Life Scenarios (already multi-level from prior answer) -----------
+const scenarios = [
+  {
+    prompt: "You open your profile page. Which HTTP method does the browser use?",
+    options: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    answer: "GET",
+    feedback: {GET:"Correct! GET fetches information.", POST:"POST sends new data.", PUT:"PUT replaces data.", DELETE:"DELETE removes data.", OPTIONS:"OPTIONS is for querying capabilities."}
+  },
+  {
+    prompt: "Upload a brand new photo to your profile.",
+    options: ["GET", "POST", "PUT", "DELETE"],
+    answer: "POST",
+    feedback: {GET:"GET only views data.", POST:"Correct! POST is used to send new data.", PUT:"PUT is for a full replacement.", DELETE:"DELETE removes data."}
+  },
+  {
+    prompt: "Replace your old photo with a new one.",
+    options: ["POST", "PUT", "DELETE", "OPTIONS"],
+    answer: "PUT",
+    feedback: {POST:"POST adds, PUT replaces.", PUT:"Correct! PUT replaces existing data.", DELETE:"DELETE removes.", OPTIONS:"OPTIONS isn't for changing data."}
+  },
+  {
+    prompt: "Remove a post you made earlier.",
+    options: ["GET", "POST", "DELETE", "TRACE"],
+    answer: "DELETE",
+    feedback: {GET:"GET only fetches.", POST:"POST adds content.", DELETE:"Correct! DELETE removes.", TRACE:"TRACE is for debugging."}
+  },
+  {
+    prompt: "Check if the server supports deleting before you try.",
+    options: ["OPTIONS", "HEAD", "TRACE"],
+    answer: "OPTIONS",
+    feedback: {OPTIONS:"Correct! OPTIONS asks what actions are allowed.", HEAD:"HEAD gets headers only.", TRACE:"TRACE is for testing routing."}
+  }
+];
+let scenarioLevel = 0, scenarioScore = 0;
+function showScenarioLevel() {
+  const s = scenarios[scenarioLevel];
+  document.getElementById('scenario-stage').innerHTML = `<b>Scenario ${scenarioLevel+1}:</b> <br>${s.prompt}`;
+  document.getElementById('scenario-feedback').textContent = "";
+  document.getElementById('scenario-next').innerHTML = "";
+  document.getElementById('scenario-buttons').innerHTML =
+    s.options.map(opt =>
+      `<button onclick="chooseScenarioOption('${opt}')">${opt}</button>`
+    ).join(' ');
+}
+function chooseScenarioOption(choice) {
+  const s = scenarios[scenarioLevel];
+  document.getElementById('scenario-feedback').textContent = s.feedback[choice] || "Try again!";
+  if(choice === s.answer) {
+    scenarioScore++;
+    document.getElementById('scenario-next').innerHTML = `<button onclick="nextScenario()">Next Scenario</button>`;
+    Array.from(document.getElementById('scenario-buttons').children).forEach(btn => btn.disabled = true);
+  }
+}
+function nextScenario() {
+  scenarioLevel++;
+  if(scenarioLevel >= scenarios.length) {
+    document.getElementById('scenario-stage').innerHTML = `<b>Game Over!</b><br>You scored ${scenarioScore} out of ${scenarios.length}.`;
+    document.getElementById('scenario-buttons').innerHTML = `<button onclick="restartScenarioGame()">Play Again</button>`;
+    document.getElementById('scenario-feedback').textContent = "";
+    document.getElementById('scenario-next').innerHTML = "";
+  } else { showScenarioLevel(); }
+}
+function restartScenarioGame() { scenarioLevel = 0; scenarioScore = 0; showScenarioLevel(); }
+showScenarioLevel();
+
+// ----------- HTTP Race Multi-Level -----------
+const raceLevels = [
+  {
+    title: "Level 1: Who fetches info fastest?",
+    choices: [
+      {txt:"GET", correct:true, msg:"🚀 Correct! GET is for fetching info quickly."},
+      {txt:"POST", correct:false, msg:"POST sends data but is slower!"},
+      {txt:"TRACE", correct:false, msg:"TRACE is for debugging."}
+    ]
+  },
+  {
+    title: "Level 2: Safely ask server what you can do.",
+    choices: [
+      {txt:"OPTIONS", correct:true, msg:"✔️ OPTIONS lets you check actions."},
+      {txt:"DELETE", correct:false, msg:"Danger! This would remove data."}
+    ]
+  },
+  {
+    title: "Level 3: What request never changes the server?",
+    choices: [
+      {txt:"GET", correct:true, msg:"Correct! GET is safe and read-only."},
+      {txt:"POST", correct:false, msg:"POST may add/change things."},
+      {txt:"PUT", correct:false, msg:"PUT updates or replaces data."}
+    ]
+  }
+];
+let raceLevel = 0, raceScore = 0;
+function showRaceLevel() {
+  let r = raceLevels[raceLevel];
+  document.getElementById('race-level').textContent = r.title;
+  document.getElementById('race-status').textContent = "";
+  document.getElementById('race-feedback').textContent = "";
+  document.getElementById('race-buttons').innerHTML = r.choices.map((ch,i) =>
+    `<button onclick="racePick(${i})">${ch.txt}</button>`
+  ).join(' ');
+  document.getElementById('race-next').style.display = "none";
+  document.getElementById('race-score').textContent = `Score: ${raceScore}`;
+}
+function racePick(idx) {
+  let r = raceLevels[raceLevel].choices[idx];
+  document.getElementById('race-feedback').textContent = r.msg;
+  if(r.correct) {
+    raceScore++;
+    document.getElementById('race-score').textContent = `Score: ${raceScore}`;
+    document.getElementById('race-next').style.display = "";
+    Array.from(document.getElementById('race-buttons').children).forEach(btn=> btn.disabled = true);
+  }
+}
+function nextRaceLevel() {
+  raceLevel++;
+  if(raceLevel < raceLevels.length) showRaceLevel();
+  else {
+    document.getElementById('race-level').textContent = "";
+    document.getElementById('race-buttons').innerHTML = "<b>All races done!</b>";
+    document.getElementById('race-feedback').textContent = `Final Score: ${raceScore}/${raceLevels.length}`;
+    document.getElementById('race-next').style.display = "none";
+  }
+}
+showRaceLevel();
+
+// ----------- Find the Method Multi-Level -----------
+const findLevels = [
+  {
+    title: "Find Level 1",
+    prompt: "You want to preview a file size before downloading. Which HTTP method?",
+    correct:"HEAD",
+    options:["GET","POST","HEAD"],
+    feedback:{HEAD:"✔️ Correct!",GET:"GET would download the content.",POST:"POST is for sending data, not fetching info."}
+  },
+  {
+    title: "Find Level 2",
+    prompt: "You want to remove a forgotten post from your feed.",
+    correct: "DELETE",
+    options: ["POST", "DELETE", "OPTIONS"],
+    feedback: {DELETE:"✔️ That's DELETE!",POST:"POST adds info, not removes.",OPTIONS:"OPTIONS just asks what could be done."}
+  },
+  {
+    title: "Find Level 3",
+    prompt: "You want to find out what methods are allowed for a URL.",
+    correct: "OPTIONS",
+    options: ["OPTIONS","DELETE","CONNECT"],
+    feedback: {OPTIONS:"✔️ Correct!",DELETE:"DELETE is for removal.",CONNECT:"CONNECT is for tunneling/HTTPS."}
+  }
+];
+let findLevel = 0, findScore = 0;
+function showFindLevel() {
+  let f = findLevels[findLevel];
+  document.getElementById('find-level').textContent = f.title;
+  document.getElementById('find-challenge').textContent = f.prompt;
+  document.getElementById('find-feedback').textContent = "";
+  document.getElementById('find-buttons').innerHTML = f.options.map(opt =>
+    `<button onclick="findMethod('${opt}')">${opt}</button>`
+  ).join(' ');
+  document.getElementById('find-score').textContent = `Score: ${findScore}`;
+  document.getElementById('find-next').style.display = "none";
+}
+function findMethod(method) {
+  let f = findLevels[findLevel];
+  if(method === f.correct) {
+    findScore++;
+    document.getElementById('find-feedback').textContent = f.feedback[method];
+    document.getElementById('find-score').textContent = `Score: ${findScore}`;
+    document.getElementById('find-next').style.display = "";
+    Array.from(document.getElementById('find-buttons').children).forEach(btn => btn.disabled=true);
+  } else {
+    document.getElementById('find-feedback').textContent = f.feedback[method] || "Try again!";
+  }
+}
+function nextFindLevel() {
+  findLevel++;
+  if(findLevel < findLevels.length) showFindLevel();
+  else {
+    document.getElementById('find-level').textContent = "";
+    document.getElementById('find-buttons').innerHTML = "<b>Finished all Find levels!</b>";
+    document.getElementById('find-feedback').textContent = `Final Score: ${findScore}/${findLevels.length}`;
+    document.getElementById('find-next').style.display = "none";
+  }
+}
+showFindLevel();
+
+// ----------- Hot Potato Multi-Level TRACE -----------
+// Improved TRACE Hot Potato game
+const potatoLevels = [
+  {prompt:"Send a message to the chef exactly as shown:", secret:"Hello Chef!"},
+  {prompt:"Tell the waiter your secret code (123ABC):", secret:"123ABC"},
+  {prompt:"Say 'VIP please!'", secret:"VIP please!"}
+];
+let potatoLevel = 0, potatoScore = 0;
+
+function showPotatoLevel() {
+  let p = potatoLevels[potatoLevel];
+  document.getElementById('potato-level').textContent = `Level ${potatoLevel+1}`;
+  document.getElementById('potato-status').textContent = `${p.prompt} "${p.secret}" (case-insensitive)`;
+  document.getElementById('potato-feedback').textContent = "";
+  document.getElementById('potato-score').textContent = `Score: ${potatoScore}`;
+  document.getElementById('potato-next').style.display = "none";
+  document.getElementById('potato-input').value = "";
+  document.getElementById('potato-input').disabled = false;
+}
+
+function passPotato() {
+  let p = potatoLevels[potatoLevel];
+  let msg = document.getElementById('potato-input').value.trim();
+  if(msg.toLowerCase() === p.secret.toLowerCase()) {
+    potatoScore++;
+    document.getElementById('potato-feedback').textContent = `🔄 TRACE Echo: ${msg}`;
+    document.getElementById('potato-score').textContent = `Score: ${potatoScore}`;
+    document.getElementById('potato-next').style.display = "";
+    document.getElementById('potato-input').disabled = true;
+  } else {
+    document.getElementById('potato-feedback').textContent = "❌ Try again! Match exactly (case-insensitive).";
+  }
+}
+
+function nextPotatoLevel() {
+  potatoLevel++;
+  if(potatoLevel < potatoLevels.length) showPotatoLevel();
+  else {
+    document.getElementById('potato-level').textContent = "";
+    document.getElementById('potato-feedback').textContent = `🎉 Game Complete! Score: ${potatoScore}/${potatoLevels.length}`;
+    document.getElementById('potato-next').style.display = "none";
+    document.getElementById('potato-input').value = "";
+    document.getElementById('potato-input').disabled = true;
+  }
+}
+
+showPotatoLevel();
+
+
+// ----------- Tunnel Multi-Level CONNECT -----------
+const tunnelLevels = [
+  {prompt: "Establish secure tunnel to VIP lounge."},
+  {prompt: "Establish secure tunnel for API server connection."},
+  {prompt: "Establish tunnel to admin room."}
+];
+let tunnelLevel = 0, tunnelScore = 0;
+
+function showTunnelLevel() {
+  document.getElementById('tunnel-level').textContent = `Level ${tunnelLevel+1}`;
+  document.getElementById('tunnel-status').textContent = tunnelLevels[tunnelLevel].prompt;
+  document.getElementById('tunnel-feedback').textContent = "Click the button to build the tunnel safely.";
+  document.getElementById('tunnel-score').textContent = `Tunnels Built: ${tunnelScore} / ${tunnelLevels.length}`;
+  document.getElementById('tunnel-next').style.display = "none";
+  document.getElementById('tunnel-btn').disabled = false;
+}
+
+function tunnelConnect() {
+  tunnelScore++;
+  document.getElementById('tunnel-feedback').textContent = "🎉 Tunnel built successfully!";
+  document.getElementById('tunnel-score').textContent = `Tunnels Built: ${tunnelScore} / ${tunnelLevels.length}`;
+  document.getElementById('tunnel-next').style.display = "";
+  document.getElementById('tunnel-btn').disabled = true;
+}
+
+function nextTunnelLevel() {
+  tunnelLevel++;
+  if(tunnelLevel < tunnelLevels.length) {
+    showTunnelLevel();
+  } else {
+    document.getElementById('tunnel-level').textContent = "All tunnels established!";
+    document.getElementById('tunnel-status').textContent = "Great job! You've built all secure connections. This represents HTTPS tunnels in real life.";
+    document.getElementById('tunnel-feedback').textContent = "Thanks for learning about CONNECT!";
+    document.getElementById('tunnel-next').style.display = "none";
+    document.getElementById('tunnel-btn').disabled = true;
+  }
+}
+
+showTunnelLevel();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Methods: The Web's Secret Language</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        :root {
+            --background-color: #1a202c;
+            --card-bg: #2d3748;
+            --text-color: #e2e8f0;
+            --primary-color: #53c0a5;
+            --accent-color: #a7f3d0;
+            --get-color: #a7f3d0;
+            --post-color: #fecaca;
+            --put-color: #93c5fd;
+            --delete-color: #ef4444;
+            --patch-color: #b3a4f6;
+            --head-color: #bbf7d0;
+            --trace-color: #f0abfc;
+            --connect-color: #e0f2fe;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            width: 100%;
+            background: linear-gradient(to bottom right, #1f4287, var(--primary-color));
+            color: white;
+            text-align: center;
+            padding: 2.5rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .main-container {
+            padding: 2rem;
+            margin: 0 auto;
+            max-width: 1280px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .section-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .intro-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            gap: 2rem;
+        }
+        
+        .intro-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .intro-icon img {
+            width: 6rem;
+            height: 6rem;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+        }
+        
+        .intro-icon span {
+            margin-top: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .intro-arrow {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #9ca3af;
+        }
+        
+        .method-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .method-card {
+            background-color: #272f3d;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .method-card.get { border-color: var(--get-color); }
+        .method-card.post { border-color: var(--post-color); }
+        .method-card.put { border-color: var(--put-color); }
+        .method-card.delete { border-color: var(--delete-color); }
+        .method-card.patch { border-color: var(--patch-color); }
+        .method-card.head { border-color: var(--head-color); }
+        .method-card.trace { border-color: var(--trace-color); }
+        .method-card.connect { border-color: var(--connect-color); }
+
+        .method-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .method-card ul {
+            list-style-type: '👉';
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+            line-height: 1.5;
+        }
+        
+        .method-card li {
+            padding-left: 0.5rem;
+        }
+        
+        .method-card strong {
+            color: var(--accent-color);
+        }
+        
+        .drag-game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .scenarios-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+        
+        .scenario-card {
+            background-color: #4a5568;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 2px solid #a0aec0;
+            cursor: grab;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .scenario-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .scenario-card:active {
+            cursor: grabbing;
+        }
+        
+        .drop-zones-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+        
+        .drop-zone {
+            background-color: #374151;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            border: 4px dashed #6b7280;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .drop-zone.border-solid {
+            border-style: solid;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(83, 192, 165, 0.5);
+        }
+        
+        .drop-zone h4 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .success-message {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+        
+        .game-section {
+            background-color: #2c3444;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .game-section h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .game-btn, .start-btn, .quit-btn, .play-again-btn {
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            border: none;
+            color: #1a202c;
+        }
+        
+        .game-btn:hover, .start-btn:hover, .quit-btn:hover, .play-again-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-area {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .timer-bar {
+            width: 100%;
+            height: 0.75rem;
+            background-color: #4b5563;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timer-progress {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 9999px;
+            transition: width 0.1s linear;
+        }
+        
+        .request-prompt {
+            background-color: #4a5568;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .game-buttons-grid .game-btn {
+            background-color: var(--primary-color);
+            color: #1a202c;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .game-btn {
+            padding: 1rem;
+        }
+        
+        #get-btn { background-color: var(--get-color); }
+        #post-btn { background-color: var(--post-color); }
+        #put-btn { background-color: var(--put-color); }
+        #delete-btn { background-color: var(--delete-color); }
+        #patch-btn { background-color: var(--patch-color); }
+        #head-btn { background-color: var(--head-color); }
+        #trace-btn { background-color: var(--trace-color); }
+        #connect-btn { background-color: var(--connect-color); }
+
+        #quit-btn {
+            background-color: #4b5563;
+            color: white;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .feedback-area {
+            background-color: #374151;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .feedback-area h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feedback-area p {
+            color: #d1d5db;
+        }
+        
+        .game-over-message {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .game-over-message p {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .game-over-message #score-text {
+            font-size: 1.25rem;
+            margin-top: 0.5rem;
+        }
+        
+        .game-over-message #high-score-message {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-top: 0.25rem;
+        }
+        
+        .play-again-btn {
+            margin-top: 1rem;
+            background-color: var(--primary-color);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .opacity-50 {
+            opacity: 0.5;
+        }
+        
+        .pointer-events-none {
+            pointer-events: none;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>HTTP Methods: The Web's Secret Language</h1>
+        <p>A fun and interactive guide to GET vs. POST and beyond!</p>
+    </div>
+
+    <main class="main-container">
+        <!-- Introduction Section -->
+        <section class="section-card">
+            <h2>Your Web Browser is a Busy Restaurant</h2>
+            <p style="font-size: 1.125rem;">
+                Imagine your web browser is a customer and a web server is the kitchen. HTTP methods are the different ways you talk to the kitchen.
+                You can <strong>ask for the menu</strong>, <strong>order a meal</strong>, or even <strong>cancel an order</strong>. Each action requires a different kind of request.
+            </p>
+            <div class="intro-container">
+                <div class="intro-icon">
+                    <img src="https://assets-global.website-files.com/6574f88e16d004689b14249a/657512702b85ac55c4d023f0_65561a7ed1d4e0828ed78c5d_browser.webp" alt="Browser Icon" />
+                    <span>Your Browser</span>
+                </div>
+                <div class="intro-arrow">&harr;</div>
+                <div class="intro-icon">
+                    <img src="https://assets-global.website-files.com/6574f88e16d004689b14249a/65751270c538a74e2d3b7625_65561a7a24c5e317e0cf26c8_server.webp" alt="Server Icon" />
+                    <span>The Web Server</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main HTTP Methods Section -->
+        <section class="section-card">
+            <h2>The HTTP Crew: Main to Specialized</h2>
+            <div class="method-container">
+                <!-- GET Card -->
+                <div class="method-card get">
+                    <h3>GET</h3>
+                    <p>Request data from a specified resource. It's like asking for a menu item's details. These requests are <strong>safe</strong> and <strong>idempotent</strong>, meaning they don't change server state and can be repeated.</p>
+                </div>
+                <!-- POST Card -->
+                <div class="method-card post">
+                    <h3>POST</h3>
+                    <p>Send data to the server to create a new resource. This is like placing a new order. They are <strong>not idempotent</strong>, so submitting the same request twice might create two resources.</p>
+                </div>
+                <!-- PUT Card -->
+                <div class="method-card put">
+                    <h3>PUT</h3>
+                    <p>Replace all current representations of the target resource with the request payload. This is a full update to a resource, like replacing an entire order with a new one.</p>
+                </div>
+                <!-- DELETE Card -->
+                <div class="method-card delete">
+                    <h3>DELETE</h3>
+                    <p>Request to delete a specified resource. Like canceling an order, this method removes a resource from the server.</p>
+                </div>
+                <!-- PATCH Card -->
+                <div class="method-card patch">
+                    <h3>PATCH</h3>
+                    <p>Apply partial modifications to a resource. This is for small, partial updates, like asking for a minor change to your meal without replacing the whole thing.</p>
+                </div>
+                <!-- HEAD Card -->
+                <div class="method-card head">
+                    <h3>HEAD</h3>
+                    <p>Request headers of a resource, without the body. It's a lightweight way to check if a file exists or its metadata before downloading the full content.</p>
+                </div>
+                <!-- TRACE Card -->
+                <div class="method-card trace">
+                    <h3>TRACE</h3>
+                    <p>Perform a message loop-back test along the path to the target resource. This is for diagnostics, allowing the client to see what the server receives after any intermediate proxy modifications.</p>
+                </div>
+                <!-- CONNECT Card -->
+                <div class="method-card connect">
+                    <h3>CONNECT</h3>
+                    <p>Establish a tunnel to the server identified by the target resource. This is primarily used for creating secure HTTPS tunnels through an unencrypted HTTP proxy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Real-life Examples Section -->
+        <section class="section-card">
+            <h2>Ordering a Pizza: A Real-World Analogy</h2>
+            <p style="font-size: 1.125rem;">
+                Let's use a common online task—ordering a pizza—to see how these methods work in practice. Every click and form submission is an HTTP request!
+            </p>
+            <div class="method-container" style="margin-top: 1.5rem;">
+                <div class="method-card get">
+                    <h3><strong>GET</strong>: Looking at the menu</h3>
+                    <p>When you click on the "menu" page, your browser sends a <strong>GET</strong> request to the server. It's asking the server for the latest list of pizzas, toppings, and prices.</p>
+                </div>
+                <div class="method-card post">
+                    <h3><strong>POST</strong>: Submitting your order</h3>
+                    <p>When you fill out your name, address, and select your pizza, then click "Place Order," your browser bundles all that data and sends it with a <strong>POST</strong> request. This tells the server to create a new order in their database.</p>
+                </div>
+                <div class="method-card put">
+                    <h3><strong>PUT</strong>: Changing your mind completely</h3>
+                    <p>You submitted a pizza order, but then you realize you wanted a different pizza entirely. You go to your "My Orders" page, change the pizza, and hit "Update." This sends a <strong>PUT</strong> request that <em>replaces</em> your old order with the brand-new one.</p>
+                </div>
+                <div class="method-card patch">
+                    <h3><strong>PATCH</strong>: Adding an extra topping</h3>
+                    <p>You forgot to add extra cheese! You call the restaurant and say, "Can you just add one more topping to my order?" This is like a <strong>PATCH</strong> request—it's a small, partial update to an existing resource, not a full replacement.</p>
+                </div>
+                <div class="method-card delete">
+                    <h3><strong>DELETE</strong>: Canceling your order</h3>
+                    <p>Oops, you accidentally ordered two pizzas. You call the restaurant and ask them to cancel the extra one. This action sends a <strong>DELETE</strong> request, which tells the server to permanently remove that specific order from the system.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Activity Section -->
+        <section class="section-card">
+            <h2>Activity: Method Mingle!</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 1rem;">Drag each scenario card to the correct box to test your knowledge.</p>
+            <div class="drag-game-container">
+                <div id="scenarios" class="scenarios-list">
+                    <div class="scenario-card" draggable="true" data-method="GET">Searching for a new recipe.</div>
+                    <div class="scenario-card" draggable="true" data-method="POST">Saving a review for a restaurant.</div>
+                    <div class="scenario-card" draggable="true" data-method="GET">Viewing today's special on a website.</div>
+                    <div class="scenario-card" draggable="true" data-method="POST">Paying for your meal.</div>
+                    <div class="scenario-card" draggable="true" data-method="GET">Checking the delivery status of your order.</div>
+                    <div class="scenario-card" draggable="true" data-method="POST">Filling out a form for a reservation.</div>
+                </div>
+                <div class="drop-zones-container">
+                    <div id="get-zone" class="drop-zone get-zone">
+                        <h4>GET</h4>
+                    </div>
+                    <div id="post-zone" class="drop-zone post-zone">
+                        <h4>POST</h4>
+                    </div>
+                </div>
+                <p id="success-message" class="success-message hidden">Excellent! You got them all right!</p>
+            </div>
+        </section>
+
+        <!-- The Game Section -->
+        <section class="game-section">
+            <h2>Game: The HTTP Dispatcher</h2>
+            <p style="font-size: 1.125rem;">You're a server! Read the incoming request and quickly click the correct button to process it. Don't be too slow!</p>
+            <div id="game-controls" class="game-controls">
+                <button id="main-start-button" class="start-btn">Start Game</button>
+            </div>
+
+            <div id="game-area" class="game-area hidden">
+                <div class="game-stats">
+                    <span id="game-score">Score: 0</span>
+                    <span id="high-score">High Score: 0</span>
+                </div>
+                <div class="timer-bar">
+                    <div id="timer-progress" class="timer-progress"></div>
+                </div>
+                <div id="request-prompt" class="request-prompt"></div>
+                
+                <div class="game-buttons-grid">
+                    <button id="get-btn" class="game-btn">GET</button>
+                    <button id="post-btn" class="game-btn">POST</button>
+                    <button id="put-btn" class="game-btn">PUT</button>
+                    <button id="delete-btn" class="game-btn">DELETE</button>
+                    <button id="patch-btn" class="game-btn">PATCH</button>
+                    <button id="head-btn" class="game-btn">HEAD</button>
+                    <button id="trace-btn" class="game-btn">TRACE</button>
+                    <button id="connect-btn" class="game-btn">CONNECT</button>
+                </div>
+                <button id="quit-btn" class="quit-btn">Quit Game</button>
+            </div>
+
+            <div id="feedback-area" class="feedback-area hidden">
+                <h3 id="feedback-title"></h3>
+                <p id="feedback-text"></p>
+            </div>
+            
+            <div id="game-over-message" class="game-over-message hidden">
+                <p id="game-over-text"></p>
+                <p id="score-text"></p>
+                <button id="play-again-button" class="play-again-btn">Play Again</button>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        // Game State and functions
+        let score = 0;
+        let highScore = 0;
+        let timer;
+        let timeRemaining = 5;
+        let gameRunning = false;
+        let currentRequest = {};
+        let questionCount = 0;
+        let shuffledRequests = [];
+
+        const gameRequests = [
+            { prompt: 'Reading an article on a blog', method: 'GET', correct: 'GET', explanation: "You're just fetching data to read it, which is the main job of the GET method. It’s like glancing at the specials board—you don't change anything!" },
+            { prompt: 'Submitting a search query', method: 'GET', correct: 'GET', explanation: "A search query is a request for information. You're simply asking the server for data to show you, which is a classic GET request." },
+            { prompt: 'Sending a message in a chat app', method: 'POST', correct: 'POST', explanation: "Sending a message is like placing an order! You're creating new data on the server, so POST is needed. You're adding something new to the system." },
+            { prompt: 'Viewing your profile page', method: 'GET', correct: 'GET', explanation: "Viewing your profile is like looking at the menu—you're just getting information, so it's a GET request. Nothing on the server is being changed." },
+            { prompt: 'Logging into your account', method: 'POST', correct: 'POST', explanation: "You're sending private information (your login details) to the server to start a session. This is a classic POST request because you're creating a new state on the server." },
+            { prompt: 'Deleting an old photo', method: 'DELETE', correct: 'DELETE', explanation: "To get rid of something on the server, you need the DELETE method. It's the digital equivalent of canceling an order!" },
+            { prompt: 'Uploading a new profile picture', method: 'POST', correct: 'POST', explanation: "Uploading a file means you're creating new data on the server, so it's a POST request. You’re giving the server something new to store." },
+            { prompt: 'Updating your password', method: 'PUT', correct: 'PUT', explanation: "When you update your password, you are replacing the old one with a new one. The PUT method is for replacing an entire resource." },
+            { prompt: 'Browsing a product category', method: 'GET', correct: 'GET', explanation: "You're just fetching a list of products to see them. This is a GET request because you aren't changing anything." },
+            { prompt: 'Changing a file name in a document editor', method: 'PUT', correct: 'PUT', explanation: "Changing an existing file means you're replacing it with a new version. The PUT method is for updating an entire resource." },
+            { prompt: 'Removing a friend from your list', method: 'DELETE', correct: 'DELETE', explanation: "To get rid of something on the server, you need the DELETE method. It's like removing an item from a list." },
+            { prompt: 'Unsubscribing from a newsletter', method: 'DELETE', correct: 'DELETE', explanation: "Unsubscribing means you're removing yourself from a list, which is a DELETE request. You are requesting the server to remove your data." },
+            { prompt: 'Submitting a new blog post', method: 'POST', correct: 'POST', explanation: "You're creating a brand new piece of data on the server, which is a key purpose of the POST method." },
+            { prompt: 'Adding a new comment to a post', method: 'POST', correct: 'POST', explanation: "You are adding new content to the database. That's a classic POST request." },
+            { prompt: 'Liking a social media post', method: 'PUT', correct: 'PUT', explanation: "Liking a post changes the count for that post. It is an update to an existing resource, making it a PUT request." },
+            { prompt: 'Checking the server to see if a file exists without downloading it', method: 'HEAD', correct: 'HEAD', explanation: "The HEAD method is perfect for this. It requests the headers, which contain metadata, without requesting the entire resource body." },
+            { prompt: 'Using a proxy server to create a secure connection to a website', method: 'CONNECT', correct: 'CONNECT', explanation: "The CONNECT method is specifically designed to establish a tunnel through a proxy server for secure connections, like with HTTPS." },
+            { prompt: 'Testing what happens to a request message as it passes through proxies', method: 'TRACE', correct: 'TRACE', explanation: "The TRACE method sends a diagnostic request that gets echoed back to the client, allowing you to see if the message was altered by any intermediate servers." },
+            { prompt: 'Changing the title of a post', method: 'PATCH', correct: 'PATCH', explanation: "Changing just the title is a partial update, which is the main use case for the PATCH method." },
+            { prompt: 'Changing your profile picture', method: 'POST', correct: 'POST', explanation: "You're sending new data to the server to be added to your profile. This is a POST request." },
+            { prompt: 'Viewing a list of products in a category', method: 'GET', correct: 'GET', explanation: "You are simply requesting data to view, making it a GET request." },
+            { prompt: 'Signing up for a new account', method: 'POST', correct: 'POST', explanation: "You are creating a new resource (your account) on the server, which requires a POST request." },
+            { prompt: 'Updating your shipping address', method: 'PUT', correct: 'PUT', explanation: "You are replacing the old shipping address with a new one. This full replacement is a good use of the PUT method." },
+        ];
+        
+        const mainStartButton = document.getElementById('main-start-button');
+        const scoreDisplay = document.getElementById('game-score');
+        const highScoreDisplay = document.getElementById('high-score');
+        const timerProgress = document.getElementById('timer-progress');
+        const requestPrompt = document.getElementById('request-prompt');
+        const gameArea = document.getElementById('game-area');
+        const gameControls = document.getElementById('game-controls');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackText = document.getElementById('feedback-text');
+        const gameOverMessage = document.getElementById('game-over-message');
+        const gameOverText = document.getElementById('game-over-text');
+        const scoreText = document.getElementById('score-text');
+        const playAgainButton = document.getElementById('play-again-button');
+        
+        const gameButtons = {
+            get: document.getElementById('get-btn'),
+            post: document.getElementById('post-btn'),
+            put: document.getElementById('put-btn'),
+            delete: document.getElementById('delete-btn'),
+            patch: document.getElementById('patch-btn'),
+            head: document.getElementById('head-btn'),
+            trace: document.getElementById('trace-btn'),
+            connect: document.getElementById('connect-btn'),
+            quit: document.getElementById('quit-btn')
+        };
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function setupGame() {
+            mainStartButton.addEventListener('click', startGame);
+            gameButtons.get.addEventListener('click', () => handleChoice('GET'));
+            gameButtons.post.addEventListener('click', () => handleChoice('POST'));
+            gameButtons.put.addEventListener('click', () => handleChoice('PUT'));
+            gameButtons.delete.addEventListener('click', () => handleChoice('DELETE'));
+            gameButtons.patch.addEventListener('click', () => handleChoice('PATCH'));
+            gameButtons.head.addEventListener('click', () => handleChoice('HEAD'));
+            gameButtons.trace.addEventListener('click', () => handleChoice('TRACE'));
+            gameButtons.connect.addEventListener('click', () => handleChoice('CONNECT'));
+            gameButtons.quit.addEventListener('click', () => gameOver("You quit!"));
+            playAgainButton.addEventListener('click', startGame);
+        }
+
+        function startGame() {
+            score = 0;
+            questionCount = 0;
+            shuffledRequests = shuffleArray([...gameRequests]);
+            updateScore();
+            hideGameOverMessage();
+            hideFeedback();
+            gameRunning = true;
+            gameControls.classList.add('hidden');
+            gameArea.style.display = 'flex';
+            nextRequest();
+        }
+
+        function nextRequest() {
+            if (!gameRunning) return;
+            if (questionCount >= 10) {
+                gameOver(`Game Over! You finished all 10 questions.`);
+                return;
+            }
+            currentRequest = shuffledRequests[questionCount];
+            requestPrompt.innerHTML = currentRequest.prompt;
+            questionCount++;
+            resetTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            timeRemaining = 5;
+            timerProgress.style.width = '100%';
+            timer = setInterval(() => {
+                timeRemaining -= 0.1;
+                timerProgress.style.width = (timeRemaining / 5) * 100 + '%';
+                if (timeRemaining <= 0) {
+                    gameOver("Time's up! You were too slow.");
+                }
+            }, 100);
+        }
+
+        function handleChoice(choice) {
+            if (!gameRunning) return;
+            clearInterval(timer);
+            if (choice === currentRequest.method) {
+                score += 10;
+                updateScore();
+                showFeedback("Correct!", "That's exactly right! You're a natural HTTP dispatcher!");
+                setTimeout(() => {
+                    hideFeedback();
+                    nextRequest();
+                }, 2000);
+            } else {
+                score = Math.max(0, score - 5);
+                updateScore();
+                requestPrompt.classList.add('animate-shake');
+                requestPrompt.addEventListener('animationend', () => {
+                    requestPrompt.classList.remove('animate-shake');
+                }, { once: true });
+                showFeedback("Wrong!", `The correct answer was <strong>${currentRequest.correct}</strong>. <br>${currentRequest.explanation}`);
+                setTimeout(() => {
+                    hideFeedback();
+                    nextRequest();
+                }, 5000);
+            }
+        }
+
+        function gameOver(message) {
+            gameRunning = false;
+            clearInterval(timer);
+            gameArea.style.display = 'none';
+            gameOverMessage.classList.remove('hidden');
+            
+            gameOverText.textContent = message;
+            scoreText.textContent = `Your final score: ${score}`;
+            if (score > highScore) {
+                highScore = score;
+            }
+        }
+
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+            highScoreDisplay.textContent = `High Score: ${highScore}`;
+        }
+        
+        function showFeedback(title, text) {
+            feedbackTitle.textContent = title;
+            feedbackText.innerHTML = text;
+            feedbackArea.classList.remove('hidden');
+        }
+
+        function hideFeedback() {
+            feedbackArea.classList.add('hidden');
+        }
+        
+        function hideGameOverMessage() {
+            gameOverMessage.classList.add('hidden');
+        }
+        
+        // --- Interactive Activity JavaScript ---
+        const scenarios = document.querySelectorAll('.scenario-card');
+        const getZone = document.getElementById('get-zone');
+        const postZone = document.getElementById('post-zone');
+        const successMessage = document.getElementById('success-message');
+        let correctDrops = 0;
+        const totalScenarios = scenarios.length;
+        
+        scenarios.forEach(scenario => {
+            scenario.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', e.target.dataset.method);
+                e.dataTransfer.setData('text/html', e.target.innerHTML);
+                e.target.classList.add('opacity-50');
+            });
+            scenario.addEventListener('dragend', (e) => {
+                e.target.classList.remove('opacity-50');
+            });
+        });
+
+        [getZone, postZone].forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('border-solid');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('border-solid');
+            });
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const droppedMethod = e.dataTransfer.getData('text/plain');
+                const droppedElementText = e.dataTransfer.getData('text/html');
+                const droppedElement = Array.from(scenarios).find(card => card.innerHTML.trim() === droppedElementText.trim());
+                
+                if (!droppedElement) {
+                    zone.classList.remove('border-solid');
+                    return;
+                }
+
+                const isCorrect = (zone.id === 'get-zone' && droppedMethod === 'GET') || (zone.id === 'post-zone' && droppedMethod === 'POST');
+                
+                if (isCorrect) {
+                    droppedElement.classList.add('pointer-events-none', 'opacity-50');
+                    droppedElement.draggable = false;
+                    zone.appendChild(droppedElement);
+                    correctDrops++;
+                    if (correctDrops === totalScenarios) {
+                        successMessage.classList.remove('hidden');
+                    }
+                } else {
+                    droppedElement.classList.add('animate-shake');
+                    droppedElement.addEventListener('animationend', () => {
+                        droppedElement.classList.remove('animate-shake');
+                    }, { once: true });
+                }
+                zone.classList.remove('border-solid');
+            });
+        });
+
+        window.onload = function() {
+            setupGame();
+        };
+    </script>
+</body>
+</html>

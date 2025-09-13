@@ -756,6 +756,7 @@
                 score += 10;
                 updateScore();
                 showFeedback("Correct!", "That's exactly right! You're a natural HTTP dispatcher!");
+                feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 setTimeout(() => {
                     hideFeedback();
                     nextRequest();
@@ -768,6 +769,7 @@
                     requestPrompt.classList.remove('animate-shake');
                 }, { once: true });
                 showFeedback("Wrong!", `The correct answer was <strong>${currentRequest.correct}</strong>. <br>${currentRequest.explanation}`);
+                feedbackArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 setTimeout(() => {
                     hideFeedback();
                     nextRequest();

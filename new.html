@@ -606,6 +606,7 @@
             background-color: #1e242e;
             padding: 1.5rem;
             border-radius: 1rem;
+            margin-top: 1.5rem;
         }
 
         .response-area h5 {
@@ -621,6 +622,44 @@
             color: #ccc;
             white-space: pre-wrap;
             word-wrap: break-word;
+        }
+
+        /* --- New Comparison Sections --- */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .comparison-card {
+            background-color: #272f3d;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .comparison-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-card ul {
+            list-style-type: '✔️ ';
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+        
+        .comparison-card li {
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
     </style>
@@ -818,6 +857,67 @@
                 <!-- Content will be injected here by JavaScript -->
             </div>
         </section>
+        
+        <!-- --- -->
+        
+        <!-- New Comparison Section 1 -->
+        <section class="section-card">
+            <h2>The Difference Between PUT, POST, & PATCH</h2>
+            <p style="font-size: 1.125rem;">These methods are often confused because they all involve sending data to the server. The key difference lies in their purpose and how they affect the server's state. <strong>The `TRACE` method is not included here because it is a diagnostic tool, not a data-manipulation method.</strong></p>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3><i class="fas fa-upload" style="color: var(--post-color);"></i> POST (Create)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **create a new resource**.</li>
+                        <li><strong>Idempotent:</strong> **No**. Sending the same POST request twice will create two new, identical resources.</li>
+                        <li><strong>Example:</strong> Creating a new blog post. A form submission to `api/posts` creates a new entry.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-sync-alt" style="color: var(--put-color);"></i> PUT (Replace)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **fully replace** an existing resource.</li>
+                        <li><strong>Idempotent:</strong> **Yes**. Sending the same PUT request multiple times will have the same effect as sending it once.</li>
+                        <li><strong>Example:</strong> Updating an entire blog post. A request to `api/posts/123` with a new, complete body will replace the old post entirely.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-pen-nib" style="color: var(--patch-color);"></i> PATCH (Update)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **partially update** an existing resource.</li>
+                        <li><strong>Idempotent:</strong> **No**. It applies a change, so repeating it might have different results.</li>
+                        <li><strong>Example:</strong> Changing only the title of a blog post. A request to `api/posts/123` with only a `{"title": "New Title"}` payload will change only that field.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- -->
+        
+        <!-- New Comparison Section 2 -->
+        <section class="section-card">
+            <h2>The Difference Between GET & HEAD</h2>
+            <p style="font-size: 1.125rem;">These two methods are used for requesting information, but one is a lightweight version of the other. Think of it as peeking at a package before you open it.</p>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3><i class="fas fa-search" style="color: var(--get-color);"></i> GET (Get Everything)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **retrieve the entire resource**.</li>
+                        <li><strong>Includes Body:</strong> **Yes**. The server sends the full resource data (e.g., the HTML content of a page, a JSON file, or an image).</li>
+                        <li><strong>Example:</strong> Viewing a blog post. A request to `api/posts/123` will return the entire post, including its title, content, and author.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-info-circle" style="color: var(--head-color);"></i> HEAD (Get Headers Only)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **retrieve only the headers** for a resource.</li>
+                        <li><strong>Includes Body:</strong> **No**. The server sends no body, only the headers (metadata) from the response.</li>
+                        <li><strong>Example:</strong> Checking if a blog post exists. A request to `api/posts/123` will return headers like `Content-Type` and `Last-Modified` without sending the full post content. This is useful for performance.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
     </main>
     
     <script>
@@ -1123,11 +1223,16 @@ if __name__ == '__main__':
     app.run(debug=True)
                 `,
                 practical: `
-<p>Click the button below to simulate fetching recipe data for a recipe with ID "123". The URL will be "<strong>/api/recipes?id=123</strong>".</p>
+<p>Enter a recipe ID to simulate fetching a recipe. The URL will be "<strong>/api/recipes?id=<span id="get-url-id">123</span></strong>".</p>
 <div class="practical-controls">
+    <label for="get-recipe-id">Recipe ID:</label>
+    <input type="text" id="get-recipe-id" value="123">
     <button id="send-request-btn">Send GET Request</button>
 </div>
 <div class="response-area">
+    <h5>Simulated Request</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
     <h5>Simulated Response</h5>
     <pre id="response-output"></pre>
 </div>
@@ -1202,6 +1307,9 @@ if __name__ == '__main__':
     <button id="send-request-btn">Send POST Request</button>
 </div>
 <div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
     <h5>Simulated Response</h5>
     <pre id="response-output"></pre>
 </div>
@@ -1279,6 +1387,9 @@ if __name__ == '__main__':
     <button id="send-request-btn">Send PUT Request</button>
 </div>
 <div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
     <h5>Simulated Response</h5>
     <pre id="response-output"></pre>
 </div>
@@ -1405,6 +1516,9 @@ if __name__ == '__main__':
     <button id="send-request-btn">Send PATCH Request</button>
 </div>
 <div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
     <h5>Simulated Response</h5>
     <pre id="response-output"></pre>
 </div>
@@ -1487,17 +1601,15 @@ async function traceRequest(url) {
                 `,
                 backendCode: `
 # Python (Flask) backend to handle the TRACE request.
+# Flask does not natively handle TRACE, but a web server or proxy can.
+# This is a simulation of a server echoing back the request headers.
 from flask import Flask, request
 
 app = Flask(__name__)
 
-# This route handles TRACE requests.
 @app.route('/api/diagnostic', methods=['TRACE'])
 def trace_request():
-    # Flask does not natively handle TRACE, but a web server or proxy can.
-    # This is a simulation of a server echoing back the request headers.
     headers = '\\n'.join([f'{key}: {value}' for key, value in request.headers.items()])
-    # Return a 200 OK status with the echoed headers in the body.
     return f'HTTP/1.1 200 OK\\n{headers}\\n\\n', 200
 
 if __name__ == '__main__':
@@ -1506,7 +1618,7 @@ if __name__ == '__main__':
                 practical: `
 <p>Simulate sending a diagnostic TRACE request to "<strong>/api/diagnostic</strong>" to see the headers received by the server.</p>
 <div class="practical-controls">
-    <button id="send-request-btn">Send TRACE Request</button>
+    <button id="send-request-btn">Simulate Connection</button>
 </div>
 <div class="response-area">
     <h5>Simulated Response</h5>
@@ -1598,28 +1710,45 @@ if __name__ == '__main__':
 
         function runPracticalDemo(method) {
             const outputArea = document.getElementById('response-output');
+            const requestPayloadArea = document.getElementById('request-payload');
             
             // Clear previous output
             outputArea.textContent = 'Simulating request...';
+            if (requestPayloadArea) {
+                requestPayloadArea.textContent = 'Preparing payload...';
+            }
 
             // Simulate a delay for a more realistic feel
             setTimeout(() => {
                 let responseData;
                 let status;
+                let requestPayload = null;
                 
                 switch (method) {
                     case 'get':
-                        responseData = {
-                            id: '123',
-                            title: 'Spicy Tofu Stir-Fry',
-                            ingredients: ['Tofu', 'Broccoli', 'Soy Sauce', 'Ginger'],
-                            instructions: 'Stir-fry tofu until crispy. Add broccoli and seasonings. Serve hot.'
-                        };
-                        status = '200 OK';
+                        const getRecipeId = document.getElementById('get-recipe-id').value;
+                        requestPayload = `GET /api/recipes?id=${getRecipeId}`;
+                        
+                        if (getRecipeId === '123') {
+                            responseData = {
+                                id: '123',
+                                title: 'Spicy Tofu Stir-Fry',
+                                ingredients: ['Tofu', 'Broccoli', 'Soy Sauce', 'Ginger'],
+                                instructions: 'Stir-fry tofu until crispy. Add broccoli and seasonings. Serve hot.'
+                            };
+                            status = '200 OK';
+                        } else {
+                            responseData = { error: 'Recipe not found' };
+                            status = '404 Not Found';
+                        }
                         break;
                     case 'post':
                         const postTitle = document.getElementById('post-title').value;
                         const postContent = document.getElementById('post-content').value;
+                        requestPayload = {
+                            title: postTitle,
+                            content: postContent
+                        };
                         responseData = {
                             id: 'post-456',
                             title: postTitle,
@@ -1631,6 +1760,10 @@ if __name__ == '__main__':
                     case 'put':
                         const newName = document.getElementById('put-name').value;
                         const newEmail = document.getElementById('put-email').value;
+                        requestPayload = {
+                            name: newName,
+                            email: newEmail
+                        };
                         responseData = {
                             id: 'user123',
                             name: newName,
@@ -1645,6 +1778,9 @@ if __name__ == '__main__':
                         break;
                     case 'patch':
                         const newTitle = document.getElementById('patch-title').value;
+                        requestPayload = {
+                            title: newTitle
+                        };
                         responseData = {
                             id: 'post-456',
                             title: newTitle,
@@ -1680,6 +1816,17 @@ if __name__ == '__main__':
                         break;
                 }
                 
+                // Display request payload if applicable
+                if (requestPayloadArea) {
+                    if (typeof requestPayload === 'object' && requestPayload !== null) {
+                        requestPayloadArea.textContent = JSON.stringify(requestPayload, null, 2);
+                    } else if (typeof requestPayload === 'string') {
+                         requestPayloadArea.textContent = requestPayload;
+                    } else {
+                        requestPayloadArea.textContent = 'No body sent with this request.';
+                    }
+                }
+
                 // Format and display the response
                 let formattedOutput = `Status: ${status}\n\n`;
                 if (typeof responseData === 'object' && responseData !== null) {

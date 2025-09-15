@@ -917,8 +917,110 @@
                 </div>
             </div>
         </section>
+
+
+
+
+
+
+
+
+
+        
+ <section class="section">
+            <h2>HTTP Methods in Action: Code and Concepts</h2>
+            <p>Select an HTTP method from the dropdown to see its explanation and a side-by-side code example for both the frontend (client) and backend (server), both written in JavaScript.</p>
+            <div class="interactive-form">
+                <select id="methodSelect" onchange="updateMethodContent()">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="OPTIONS">OPTIONS</option>
+                    <option value="TRACE">TRACE</option>
+                </select>
+            </div>
+            <div id="interactive-section">
+                <h3 id="methodTitle">GET Method</h3>
+                <p id="methodDescription">The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.</p>
+                <div class="method-explanation">
+                    <div class="code-block">
+                        <h4>Frontend (Client-side) JavaScript</h4>
+                        <pre id="frontendCode"><code>
+// Client requests data for post with ID 1
+fetch('/api/posts/1')
+    .then(response => response.json())
+    .then(data => console.log('GET response:', data));
+                        </code></pre>
+                    </div>
+                    <div class="code-block">
+                        <h4>Backend (Server-side) JavaScript</h4>
+                        <pre id="backendCode"><code>
+// A basic mock server to handle a GET request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = [{ id: 1, title: 'Example' }];
+
+app.get('/api/posts/:id', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+        res.status(200).json(post);
+    } else {
+        res.status(404).json({ message: 'Not Found' });
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2>Animated HTTP Methods Flow</h2>
+            <p>Select a method and watch the animated flow of how a request travels from the client to the server and back.</p>
+            <div class="interactive-form">
+                <select id="animationMethodSelect" onchange="animateMethod()">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="OPTIONS">OPTIONS</option>
+                    <option value="TRACE">TRACE</option>
+                </select>
+            </div>
+            <div class="animation-container">
+                <div class="animation-scene">
+                    <div class="entity">Client</div>
+                    <div id="requestBox" class="request-box"></div>
+                    <div id="responseBox" class="response-box"></div>
+                    <div class="entity">Server</div>
+                </div>
+                <div class="result-box" id="animationResultBox">
+                    <h3>Animation Log:</h3>
+                    <p id="animationStatus">Select a method to begin the animation.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+
+
+
+
         
     </main>
+
+
     
     <script>
         // Game State and functions
@@ -1848,6 +1950,145 @@ if __name__ == '__main__':
             setupGame();
             renderMethodDetails('get'); // Render initial content for GET method
         };
+
+
+
+
+
+
+        const methodData = {
+        GET: {
+            title: "GET Method",
+            description: "The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.",
+            frontend: `
+// Client requests data for post with ID 1
+fetch('/api/posts/1')
+    .then(response => response.json())
+    .then(data => console.log('GET response:', data));
+            `,
+            backend: `
+// A basic mock server to handle a GET request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = [{ id: 1, title: 'Example' }];
+
+app.get('/api/posts/:id', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+        res.status(200).json(post);
+    } else {
+        res.status(404).json({ message: 'Not Found' });
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+            `
+        },
+        POST: {
+            title: "POST Method",
+            description: "The <code>POST</code> method is used to send data to the server to create a new resource.",
+            frontend: `
+// Client sends data to create a new post
+const newPost = { title: 'New Post', body: 'This is the body.' };
+fetch('/api/posts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newPost)
+})
+.then(response => response.json())
+.then(data => console.log('POST response:', data));
+            `,
+            backend: `
+// A basic mock server to handle a POST request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = []; // In a real app, this would be a database
+
+app.post('/api/posts', (req, res) => {
+    const newPost = { id: Date.now(), ...req.body };
+    posts.push(newPost);
+    res.status(201).json(newPost);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+            `
+        },
+        // Add the other methods as you had before (PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE)…
+    };
+
+    // --- Update code block content when dropdown changes ---
+    function updateMethodContent() {
+        const selectElement = document.getElementById('methodSelect');
+        const selectedMethod = selectElement.value;
+        const data = methodData[selectedMethod];
+
+        document.getElementById('methodTitle').innerText = data.title;
+        document.getElementById('methodDescription').innerHTML = data.description;
+        document.getElementById('frontendCode').querySelector('code').innerText = data.frontend;
+        document.getElementById('backendCode').querySelector('code').innerText = data.backend;
+    }
+
+    // --- Animation Functions ---
+    function animateMethod() {
+        const method = document.getElementById('animationMethodSelect').value;
+        const requestBox = document.getElementById('requestBox');
+        const responseBox = document.getElementById('responseBox');
+        const statusText = document.getElementById('animationStatus');
+
+        // Reset animation
+        requestBox.style.animation = 'none';
+        responseBox.style.animation = 'none';
+        void requestBox.offsetWidth; // Trigger reflow
+        void responseBox.offsetWidth;
+
+        requestBox.style.opacity = '0';
+        responseBox.style.opacity = '0';
+        requestBox.innerText = '';
+        responseBox.innerText = '';
+
+        statusText.innerText = `Sending ${method} request...`;
+
+        // Request animation
+        setTimeout(() => {
+            requestBox.innerText = method;
+            requestBox.style.animation = 'sendRequest 2s ease-in-out forwards';
+        }, 100);
+
+        // Response animation
+        setTimeout(() => {
+            const response = getMethodResponse(method);
+            responseBox.innerText = response;
+            responseBox.style.animation = 'sendResponse 2s ease-in-out forwards';
+            statusText.innerText = `Server responded with ${response}!`;
+        }, 2100);
+    }
+
+    function getMethodResponse(method) {
+        switch (method) {
+            case 'GET': return '200 OK';
+            case 'POST': return '201 Created';
+            case 'PUT': return '200 OK';
+            case 'PATCH': return '200 OK';
+            case 'DELETE': return '204 No Content';
+            case 'HEAD': return '200 OK';
+            case 'OPTIONS': return '204 No Content';
+            case 'TRACE': return '200 OK';
+            default: return '...';
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateMethodContent();
+    });
+
+
+
+
+        
     </script>
 </body>
 </html>

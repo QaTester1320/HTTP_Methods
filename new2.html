@@ -259,23 +259,7 @@
             <p>A comprehensive guide to understanding HTTP methods, their differences, and practical applications with JavaScript examples.</p>
         </header>
 
-        <section class="section">
-            <h2>Interactive HTTP Method Demonstrator</h2>
-            <p>Enter data below to see how different HTTP methods work. The form will simulate a <code>POST</code> request for creation and a <code>PUT</code> request for an update.</p>
-            <div class="interactive-form">
-                <input type="text" id="postTitle" placeholder="Enter post title">
-                <input type="text" id="postBody" placeholder="Enter post body">
-                <input type="number" id="postId" placeholder="Enter post ID to update">
-                <button onclick="createPost()">Create Post (POST)</button>
-                <button onclick="updatePost()">Update Post (PUT)</button>
-            </div>
-            <div class="result-box" id="resultBox">
-                <h3>Result:</h3>
-                <pre id="resultOutput"></pre>
-            </div>
-        </section>
-
-        <section class="section">
+         <section class="section">
             <h2>HTTP Methods in Action: Code and Concepts</h2>
             <p>Select an HTTP method from the dropdown to see its explanation and a side-by-side code example for both the frontend (client) and backend (server), both written in JavaScript.</p>
             <div class="interactive-form">
@@ -328,7 +312,6 @@ app.listen(3000, () => console.log('Server running on port 3000'));
                 </div>
             </div>
         </section>
-
         <section class="section">
             <h2>Animated HTTP Methods Flow</h2>
             <p>Select a method and watch the animated flow of how a request travels from the client to the server and back.</p>
@@ -357,159 +340,21 @@ app.listen(3000, () => console.log('Server running on port 3000'));
                 </div>
             </div>
         </section>
-
-        <section class="section comparison">
-            <h2>PUT vs. POST vs. PATCH</h2>
-            <div class="put-post-patch">
-                <div>
-                    <h4>POST</h4>
-                    <p><strong>Purpose:</strong> Used to create a new resource on the server.</p>
-                    <p><strong>Key characteristic:</strong> It is not idempotent. Sending the same <code>POST</code> request multiple times will create multiple new resources.</p>
-                </div>
-                <div>
-                    <h4>PUT</h4>
-                    <p><strong>Purpose:</strong> Used to update an existing resource or create a new one if the URI is known.</p>
-                    <p><strong>Key characteristic:</strong> It is idempotent. Sending the same <code>PUT</code> request multiple times will have the same effect as a single request (the resource is replaced with the new data).</p>
-                </div>
-                <div>
-                    <h4>PATCH</h4>
-                    <p><strong>Purpose:</strong> Used to apply partial modifications to a resource.</p>
-                    <p><strong>Key characteristic:</strong> It is not idempotent. Sending the same <code>PATCH</code> request multiple times may not have the same effect if the resource state changes between requests.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section comparison">
-            <h2>GET vs. HEAD</h2>
-            <div class="get-head">
-                <div>
-                    <h4>GET</h4>
-                    <p><strong>Purpose:</strong> Retrieves a representation of the specified resource.</p>
-                    <p><strong>Key characteristic:</strong> The server returns the full response, including the headers and the body containing the resource data.</p>
-                </div>
-                <div>
-                    <h4>HEAD</h4>
-                    <p><strong>Purpose:</strong> Retrieves the headers of a resource without the body.</p>
-                    <p><strong>Key characteristic:</strong> The server returns only the headers, useful for checking if a resource exists or verifying its size/type without downloading the content.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section gemini-container">
-            <h2>Ask Gemini About Web Concepts</h2>
-            <p>Type any web development concept below and get a detailed explanation from the Gemini API.</p>
-            <div class="interactive-form">
-                <textarea id="geminiPrompt" class="gemini-textarea" placeholder="e.g., Explain the difference between synchronous and asynchronous JavaScript..."></textarea>
-                <button onclick="askGemini()">Ask Gemini</button>
-            </div>
-            <div id="geminiLoading" style="display: none; text-align: center; margin-top: 15px;">
-                <p>Generating explanation...</p>
-            </div>
-            <div class="gemini-result" id="geminiResult">
-                <p>Your explanation will appear here.</p>
-            </div>
-        </section>
     </div>
 
-    <script>
-        // In-memory data store for the interactive form demonstration
-        let posts = [
-            { id: 1, title: 'First Blog Post', body: 'This is the content of the first post.' },
-            { id: 2, title: 'Second Post', body: 'The body of the second post.' }
-        ];
-
-        // Functions for the interactive form
-        function simulateApiRequest(method, url, data = null) {
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    let response;
-                    const id = parseInt(url.split('/')[3]);
-
-                    switch (method) {
-                        case 'POST':
-                            const newId = posts.length > 0 ? Math.max(...posts.map(p => p.id)) + 1 : 1;
-                            const newPost = { id: newId, ...data };
-                            posts.push(newPost);
-                            response = { status: 201, data: newPost };
-                            break;
-                        case 'PUT':
-                            const index = posts.findIndex(p => p.id === id);
-                            if (index !== -1) {
-                                posts[index] = { id: id, ...data };
-                                response = { status: 200, data: posts[index] };
-                            } else {
-                                response = { status: 404, data: { message: 'Not Found' } };
-                            }
-                            break;
-                        default:
-                            response = { status: 400, data: { message: 'Method not supported' } };
-                    }
-                    resolve(response);
-                }, 500);
-            });
-        }
-
-        async function createPost() {
-            const title = document.getElementById('postTitle').value;
-            const body = document.getElementById('postBody').value;
-            const output = document.getElementById('resultOutput');
-            const resultBox = document.getElementById('resultBox');
-
-            if (!title || !body) {
-                output.textContent = 'Please enter both title and body.';
-                resultBox.style.backgroundColor = '#f0d1d1';
-                resultBox.style.borderColor = '#c0392b';
-                return;
-            }
-
-            const newPostData = { title, body };
-            output.textContent = 'Simulating POST request...';
-            const response = await simulateApiRequest('POST', '/api/posts', newPostData);
-
-            output.textContent = `POST request successful!
-Status: ${response.status}
-New Post: ${JSON.stringify(response.data, null, 2)}`;
-            resultBox.style.backgroundColor = '#d1f0d1';
-            resultBox.style.borderColor = '#27ae60';
-        }
-
-        async function updatePost() {
-            const title = document.getElementById('postTitle').value;
-            const body = document.getElementById('postBody').value;
-            const id = document.getElementById('postId').value;
-            const output = document.getElementById('resultOutput');
-            const resultBox = document.getElementById('resultBox');
-
-            if (!id) {
-                output.textContent = 'Please enter a post ID to update.';
-                resultBox.style.backgroundColor = '#f0d1d1';
-                resultBox.style.borderColor = '#c0392b';
-                return;
-            }
-
-            const updatedData = { title, body };
-            output.textContent = `Simulating PUT request for post ID ${id}...`;
-            const response = await simulateApiRequest('PUT', `/api/posts/${id}`, updatedData);
-
-            output.textContent = `PUT request successful!
-Status: ${response.status}
-Updated Post: ${JSON.stringify(response.data, null, 2)}`;
-            resultBox.style.backgroundColor = '#d1f0d1';
-            resultBox.style.borderColor = '#27ae60';
-        }
-
-        // Data and functions for the dynamic code examples section
-        const methodData = {
-            GET: {
-                title: "GET Method",
-                description: "The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.",
-                frontend: `
+   <script>
+    // --- Data for the dynamic code examples section ---
+    const methodData = {
+        GET: {
+            title: "GET Method",
+            description: "The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.",
+            frontend: `
 // Client requests data for post with ID 1
 fetch('/api/posts/1')
     .then(response => response.json())
     .then(data => console.log('GET response:', data));
-                `,
-                backend: `
+            `,
+            backend: `
 // A basic mock server to handle a GET request
 // (Conceptual example using Node.js)
 const express = require('express');
@@ -527,12 +372,12 @@ app.get('/api/posts/:id', (req, res) => {
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            POST: {
-                title: "POST Method",
-                description: "The <code>POST</code> method is used to send data to the server to create a new resource. It is not idempotent, as sending the same request multiple times will create multiple resources.",
-                frontend: `
+            `
+        },
+        POST: {
+            title: "POST Method",
+            description: "The <code>POST</code> method is used to send data to the server to create a new resource.",
+            frontend: `
 // Client sends data to create a new post
 const newPost = { title: 'New Post', body: 'This is the body.' };
 fetch('/api/posts', {
@@ -542,8 +387,8 @@ fetch('/api/posts', {
 })
 .then(response => response.json())
 .then(data => console.log('POST response:', data));
-                `,
-                backend: `
+            `,
+            backend: `
 // A basic mock server to handle a POST request
 // (Conceptual example using Node.js)
 const express = require('express');
@@ -557,331 +402,77 @@ app.post('/api/posts', (req, res) => {
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            PUT: {
-                title: "PUT Method",
-                description: "The <code>PUT</code> method is used to update an existing resource or create a new one if it doesn't exist. It is idempotent, meaning multiple identical requests have the same effect as a single one.",
-                frontend: `
-// Client sends data to replace post with ID 1
-const updatedPost = { title: 'Updated Title', body: 'New body content.' };
-fetch('/api/posts/1', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedPost)
-})
-.then(response => response.json())
-.then(data => console.log('PUT response:', data));
-                `,
-                backend: `
-// A basic mock server to handle a PUT request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
-const posts = [{ id: 1, title: 'Old Title' }];
+            `
+        },
+        // Add the other methods as you had before (PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE)…
+    };
 
-app.put('/api/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    const index = posts.findIndex(p => p.id === postId);
-    if (index !== -1) {
-        posts[index] = { id: postId, ...req.body };
-        res.status(200).json(posts[index]);
-    } else {
-        res.status(404).json({ message: 'Not Found' });
+    // --- Update code block content when dropdown changes ---
+    function updateMethodContent() {
+        const selectElement = document.getElementById('methodSelect');
+        const selectedMethod = selectElement.value;
+        const data = methodData[selectedMethod];
+
+        document.getElementById('methodTitle').innerText = data.title;
+        document.getElementById('methodDescription').innerHTML = data.description;
+        document.getElementById('frontendCode').querySelector('code').innerText = data.frontend;
+        document.getElementById('backendCode').querySelector('code').innerText = data.backend;
     }
-});
 
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            PATCH: {
-                title: "PATCH Method",
-                description: "The <code>PATCH</code> method is used to apply partial modifications to a resource. It is not idempotent and should only be used for small, specific updates.",
-                frontend: `
-// Client sends data to partially update post with ID 1
-const partialUpdate = { body: 'Just updating the body.' };
-fetch('/api/posts/1', {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(partialUpdate)
-})
-.then(response => response.json())
-.then(data => console.log('PATCH response:', data));
-                `,
-                backend: `
-// A basic mock server to handle a PATCH request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
-const posts = [{ id: 1, title: 'Original', body: 'Original body' }];
+    // --- Animation Functions ---
+    function animateMethod() {
+        const method = document.getElementById('animationMethodSelect').value;
+        const requestBox = document.getElementById('requestBox');
+        const responseBox = document.getElementById('responseBox');
+        const statusText = document.getElementById('animationStatus');
 
-app.patch('/api/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    const post = posts.find(p => p.id === postId);
-    if (post) {
-        Object.assign(post, req.body); // Update only the specified fields
-        res.status(200).json(post);
-    } else {
-        res.status(404).json({ message: 'Not Found' });
+        // Reset animation
+        requestBox.style.animation = 'none';
+        responseBox.style.animation = 'none';
+        void requestBox.offsetWidth; // Trigger reflow
+        void responseBox.offsetWidth;
+
+        requestBox.style.opacity = '0';
+        responseBox.style.opacity = '0';
+        requestBox.innerText = '';
+        responseBox.innerText = '';
+
+        statusText.innerText = `Sending ${method} request...`;
+
+        // Request animation
+        setTimeout(() => {
+            requestBox.innerText = method;
+            requestBox.style.animation = 'sendRequest 2s ease-in-out forwards';
+        }, 100);
+
+        // Response animation
+        setTimeout(() => {
+            const response = getMethodResponse(method);
+            responseBox.innerText = response;
+            responseBox.style.animation = 'sendResponse 2s ease-in-out forwards';
+            statusText.innerText = `Server responded with ${response}!`;
+        }, 2100);
     }
-});
 
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            DELETE: {
-                title: "DELETE Method",
-                description: "The <code>DELETE</code> method is used to delete a specified resource. It is idempotent, as deleting a resource that is already gone has the same result as deleting it the first time.",
-                frontend: `
-// Client sends request to delete post with ID 1
-fetch('/api/posts/1', {
-    method: 'DELETE'
-})
-.then(response => console.log('DELETE response status:', response.status));
-                `,
-                backend: `
-// A basic mock server to handle a DELETE request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
-let posts = [{ id: 1, title: 'To be deleted' }];
-
-app.delete('/api/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    posts = posts.filter(p => p.id !== postId);
-    res.status(204).send(); // 204 No Content
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            HEAD: {
-                title: "HEAD Method",
-                description: "The <code>HEAD</code> method is identical to <code>GET</code>, but the server does not return a response body. It is used to get information about a resource, like its headers, without downloading the content.",
-                frontend: `
-// Client sends HEAD request to check if a post exists and get its metadata
-fetch('/api/posts/1', {
-    method: 'HEAD'
-})
-.then(response => {
-    console.log('HEAD status:', response.status);
-    console.log('Content-Type:', response.headers.get('Content-Type'));
-});
-                `,
-                backend: `
-// A basic mock server to handle a HEAD request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
-const posts = [{ id: 1, title: 'Example' }];
-
-app.head('/api/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    const post = posts.find(p => p.id === postId);
-    if (post) {
-        res.status(200).set('Content-Type', 'application/json').end();
-    } else {
-        res.status(404).end();
+    function getMethodResponse(method) {
+        switch (method) {
+            case 'GET': return '200 OK';
+            case 'POST': return '201 Created';
+            case 'PUT': return '200 OK';
+            case 'PATCH': return '200 OK';
+            case 'DELETE': return '204 No Content';
+            case 'HEAD': return '200 OK';
+            case 'OPTIONS': return '204 No Content';
+            case 'TRACE': return '200 OK';
+            default: return '...';
+        }
     }
-});
 
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            OPTIONS: {
-                title: "OPTIONS Method",
-                description: "The <code>OPTIONS</code> method describes the communication options for the target resource. This is often used to check which HTTP methods are supported by a specific URL.",
-                frontend: `
-// Client sends OPTIONS request to check allowed methods
-fetch('/api/posts/1', {
-    method: 'OPTIONS'
-})
-.then(response => {
-    const allowedMethods = response.headers.get('Allow');
-    console.log('Allowed methods:', allowedMethods);
-});
-                `,
-                backend: `
-// A basic mock server to handle a OPTIONS request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateMethodContent();
+    });
+</script>
 
-app.options('/api/posts/:id', (req, res) => {
-    res.status(204).set('Allow', 'GET, PUT, PATCH, DELETE').end();
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            },
-            TRACE: {
-                title: "TRACE Method",
-                description: "The <code>TRACE</code> method performs a message loop-back test along the path to the target resource, useful for debugging. It echoes the incoming request back to the client.",
-                frontend: `
-// Client sends TRACE request to trace the path
-fetch('/api/posts/1', {
-    method: 'TRACE'
-})
-.then(response => response.text())
-.then(text => console.log('TRACE response:', text));
-                `,
-                backend: `
-// A basic mock server to handle a TRACE request
-// (Conceptual example using Node.js)
-const express = require('express');
-const app = express();
-
-app.trace('/api/posts/:id', (req, res) => {
-    res.status(200).set('Content-Type', 'message/http').end('Echoing request back');
-});
-
-app.listen(3000, () => console.log('Server running on port 3000'));
-                `
-            }
-        };
-
-        function updateMethodContent() {
-            const selectElement = document.getElementById('methodSelect');
-            const selectedMethod = selectElement.value;
-            const data = methodData[selectedMethod];
-
-            document.getElementById('methodTitle').innerText = data.title;
-            document.getElementById('methodDescription').innerHTML = data.description;
-            document.getElementById('frontendCode').querySelector('code').innerText = data.frontend;
-            document.getElementById('backendCode').querySelector('code').innerText = data.backend;
-        }
-
-        // --- Animation Functions ---
-        function animateMethod() {
-            const method = document.getElementById('animationMethodSelect').value;
-            const requestBox = document.getElementById('requestBox');
-            const responseBox = document.getElementById('responseBox');
-            const statusText = document.getElementById('animationStatus');
-
-            // Reset animation
-            requestBox.style.animation = 'none';
-            responseBox.style.animation = 'none';
-            void requestBox.offsetWidth; // Trigger reflow
-            void responseBox.offsetWidth;
-
-            requestBox.style.opacity = '0';
-            responseBox.style.opacity = '0';
-            requestBox.innerText = '';
-            responseBox.innerText = '';
-
-            statusText.innerText = `Sending ${method} request...`;
-
-            // Request animation
-            setTimeout(() => {
-                requestBox.innerText = method;
-                requestBox.style.animation = 'sendRequest 2s ease-in-out forwards';
-            }, 100);
-
-            // Response animation
-            setTimeout(() => {
-                const response = getMethodResponse(method);
-                responseBox.innerText = response;
-                responseBox.style.animation = 'sendResponse 2s ease-in-out forwards';
-                statusText.innerText = `Server responded with ${response}!`;
-            }, 2100);
-        }
-
-        function getMethodResponse(method) {
-            switch (method) {
-                case 'GET':
-                    return '200 OK';
-                case 'POST':
-                    return '201 Created';
-                case 'PUT':
-                    return '200 OK';
-                case 'PATCH':
-                    return '200 OK';
-                case 'DELETE':
-                    return '204 No Content';
-                case 'HEAD':
-                    return '200 OK';
-                case 'OPTIONS':
-                    return '204 No Content';
-                case 'TRACE':
-                    return '200 OK';
-                default:
-                    return '...';
-            }
-        }
-
-        // --- Gemini API Functions ---
-        async function askGemini() {
-            const prompt = document.getElementById('geminiPrompt').value;
-            const resultBox = document.getElementById('geminiResult');
-            const loadingIndicator = document.getElementById('geminiLoading');
-            
-            if (!prompt) {
-                resultBox.innerText = 'Please enter a concept to explain.';
-                return;
-            }
-
-            loadingIndicator.style.display = 'block';
-            resultBox.innerText = '';
-
-            const systemPrompt = "You are a world-class web development expert. Provide a concise and clear explanation of the user's query. Use simple language and markdown to format your response, including code blocks for examples if necessary.";
-            const userQuery = prompt;
-            const apiKey = ""
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            let response = null;
-            let retries = 0;
-            const maxRetries = 5;
-            const initialDelay = 1000;
-
-            while (retries < maxRetries) {
-                try {
-                    response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (response.ok) {
-                        break;
-                    } else if (response.status === 429) {
-                        const delay = initialDelay * Math.pow(2, retries);
-                        retries++;
-                        await new Promise(res => setTimeout(res, delay));
-                        continue;
-                    } else {
-                        throw new Error(`API error: ${response.status}`);
-                    }
-                } catch (error) {
-                    resultBox.innerText = `Error: ${error.message}`;
-                    loadingIndicator.style.display = 'none';
-                    return;
-                }
-            }
-
-            if (!response || !response.ok) {
-                resultBox.innerText = 'Failed to get a response after multiple retries. Please try again later.';
-                loadingIndicator.style.display = 'none';
-                return;
-            }
-
-            const result = await response.json();
-            const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || "No explanation found.";
-            
-            resultBox.innerText = text;
-            loadingIndicator.style.display = 'none';
-        }
-
-        // Initialize content on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            updateMethodContent();
-        });
-    </script>
 </body>
 </html>

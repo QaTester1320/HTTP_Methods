@@ -26,6 +26,34 @@
       background: #f0f4f8;
     }
 
+
+.back a {
+    color: blue;
+    font-weight: 700;
+    display: inline-block; /* Make it block-like to apply width and centering */
+    text-align: center;
+    width: 100px; /* Set a fixed width */
+    padding: 10px; /* Optional, to add space inside the box */
+    text-decoration: none; /* Remove underline */
+}
+
+.back a:hover {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    cursor: url('https://qatester1320.github.io/HTTP_Methods/pointinghand.svg') 16 16, pointer;
+}
+
+.back {
+    display: flex;
+    justify-content: center; /* Center the link horizontally */
+    align-items: center; /* Center the link vertically (if container has height) */
+    height: 10vh; /* Optional, if you want to center it vertically on the page */
+}
+
+
+
     .container-card {
       background-color: white;
       border-radius: 1.5rem;
@@ -56,6 +84,7 @@
       transform: translateY(-2px) scale(1.05);
       box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
       background-color: #2563eb;
+      cursor: url('https://qatester1320.github.io/HTTP_Methods/pointinghand.svg') 16 16, pointer;
     }
 
     .btn-game:disabled {
@@ -97,8 +126,11 @@
 
   <div class="container-card max-w-5xl">
     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-green-500/10 -z-10"></div>
-
+<div class="back">
+    <a href="https://qatester1320.github.io/HTTP_Methods/">Back</a>
+</div>
     <header class="text-center mb-12">
+        
       <h1 class="text-5xl font-extrabold text-blue-800 tracking-tight dark:text-blue-300">HTTP Heroes: GET vs. POST</h1>
       <p class="mt-4 text-xl text-gray-600 dark:text-gray-300">Master the basics of web communication, the fun way!</p>
     </header>

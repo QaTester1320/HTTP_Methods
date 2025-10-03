@@ -26,6 +26,9 @@
             --head-color: #d8b4fe; /* Light Purple */
             --trace-color: #a78bfa; /* Deeper Purple */
             --connect-color: #fb7185; /* Soft Pink */
+            --submit-color: #2563eb;
+            --code-bg: #1e242e;
+            --url-bg: #2d3440;
         }
 
         body {
@@ -62,9 +65,9 @@
         
         .header p {
             font-size: 1.25rem;
-            font-weight: 300;
+            font-weight: 500;
             opacity: 0.8;
-            color: white;
+            color: #fb0606;
         }
         
         .main-container {
@@ -165,7 +168,7 @@
             color: var(--primary-color);
             margin-bottom: 0.5rem;
             display: flex;
-            align-items: center;
+            text-align: left;
             gap: 0.5rem;
         }
         
@@ -449,6 +452,428 @@
         .animate-shake {
             animation: shake 0.5s ease-in-out;
         }
+
+        /* --- New Method Details Section Styles --- */
+        .method-details-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .method-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            background-color: #272f3d;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .method-selector h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .method-selector select {
+            background-color: #374151;
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem; /* Smaller font size as requested */
+            color: white;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23aeb9be%22%20d%3D%22M287%20164.7c-5.4%205.4-11.8%208.1-19%208.1-7.2%200-13.6-2.7-19-8.1L146.2%2075.7%2050.6%20171.3c-5.4%205.4-11.8%208.1-19%208.1s-13.6-2.7-19-8.1c-10.9-10.9-10.9-28.4%200-39.3l126.3-126.3L287%20125.4c10.9%2010.9%2010.9%2028.4%200%2039.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1em top 50%;
+            background-size: 0.65em auto;
+        }
+        
+        .method-selector select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.5);
+        }
+
+        .method-explanation-area {
+            background-color: #1f2530;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.6;
+        }
+        
+        .method-explanation-area h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+        
+        .method-explanation-area p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .code-container {
+            background-color: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .code-container h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #ccc;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* --- New Practical Demo Styles --- */
+        .practical-demo {
+            margin-top: 2rem;
+            border-top: 2px solid var(--card-bg);
+            padding-top: 2rem;
+        }
+
+        .practical-demo h4 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .practical-controls {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .practical-controls label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .practical-controls input, .practical-controls textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2d3440;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+        }
+        
+        #send-request-btn {
+            background-color: var(--submit-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            align-self: flex-start;
+        }
+
+        #send-request-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .response-area {
+            background-color: #1e242e;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .response-area h5 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .response-area pre {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #ccc;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* --- New Comparison Sections --- */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .comparison-card {
+            background-color: #272f3d;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .comparison-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-card ul {
+            list-style-type: '✔️ ';
+            padding-left: 1.5rem;
+            margin: 0;
+        }
+        
+        .comparison-card li {
+            padding-left: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #13151a;
+    color: #fff;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: aqua;
+
+    padding-bottom: 10px;
+    margin-top: 20px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* --- Section Blocks --- */
+.section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #212833;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
+}
+
+/* --- Code Block Styles --- */
+.code-block {
+    background-color: #2d2d2d;
+    color: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.code-block h4 {
+    color: #3498db;
+    margin-top: 0;
+}
+
+/* --- Dropdown + Input Area --- */
+.interactive-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: revert-layer;
+    border-radius: 8px;
+    border: 1px solid #bdc3c7;
+}
+
+.interactive-form select {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #bdc3c7;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Dynamic Code Blocks Layout --- */
+#interactive-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.method-explanation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* --- Animation Section --- */
+.animation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #6650adab;
+    border-radius: 8px;
+    border: 1px solid #bdc3c7;
+}
+
+.animation-scene {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px;
+}
+
+.entity {
+    width: 100px;
+    height: 100px;
+    background-color: #2c3e50;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Request + Response Boxes */
+.request-box {
+    position: absolute;
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 50px;
+    background-color: #e74c3c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateX(-200px);
+}
+
+.response-box {
+    position: absolute;
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 50px;
+    background-color: #2ecc71;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateX(200px);
+}
+
+/* Animations */
+@keyframes sendRequest {
+    0% { transform: translateX(-200px); opacity: 0; }
+    50% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(200px); opacity: 0; }
+}
+
+@keyframes sendResponse {
+    0% { transform: translateX(200px); opacity: 0; }
+    50% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-200px); opacity: 0; }
+}
+
+.animate-request {
+    animation: sendRequest 2s ease-in-out forwards;
+}
+
+.animate-response {
+    animation: sendResponse 2s ease-in-out forwards;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
     </style>
 </head>
 <body>
@@ -543,11 +968,11 @@
                 </div>
                 <div class="method-card put">
                     <h3><strong>PUT</strong>: Changing your mind completely</h3>
-                    <p>You submitted a pizza order, but then you realize you wanted a different pizza entirely. You go to your "My Orders" page, change the pizza, and hit "Update." This sends a <strong>PUT</strong> request that <em>replaces</em> your old order with the brand-new one.</p>
+                    <p>You submitted a pizza order, but then you realize you wanted a different pizza entirely. You go to your "My Orders" page, change the pizza, and hit "Update." This sends a <strong>PUT</strong> request that <em>replaces</em> your old order with a brand-new one.</p>
                 </div>
                 <div class="method-card patch">
                     <h3><strong>PATCH</strong>: Adding an extra topping</h3>
-                    <p>You forgot to add extra cheese! You call the restaurant and say, "Can you just add one more topping to my order?" This is like a <strong>PATCH</strong> request—it's a small, partial update to an existing resource, not a full replacement.</p>
+                    <p>You forgot to add extra cheese! You call the restaurant and say, "Can you just add one more topping to my order?" This is like a <strong>PATCH</strong> request—it's a small, partial update to an an existing resource, not a full replacement.</p>
                 </div>
                 <div class="method-card delete">
                     <h3><strong>DELETE</strong>: Canceling your order</h3>
@@ -623,7 +1048,191 @@
                 <button id="play-again-button" class="play-again-btn">Play Again</button>
             </div>
         </section>
+        
+        <!-- New Method Details Section -->
+        <section class="section-card method-details-section">
+            <h2>HTTP Methods in Action: Code and Concepts</h2>
+            <div class="method-selector">
+                <h3>Select a Method to Learn More</h3>
+                <select id="method-select-dropdown">
+                    <option value="get" selected>GET</option>
+                    <option value="post">POST</option>
+                    <option value="put">PUT</option>
+                    <option value="delete">DELETE</option>
+                    <option value="patch">PATCH</option>
+                    <option value="head">HEAD</option>
+                    <option value="trace">TRACE</option>
+                    <option value="connect">CONNECT</option>
+                </select>
+            </div>
+            <div id="method-explanation-area" class="method-explanation-area">
+                <!-- Content will be injected here by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- --- -->
+        
+        <!-- New Comparison Section 1 -->
+        <section class="section-card">
+            <h2>The Difference Between PUT, POST, & PATCH</h2>
+            <p style="font-size: 1.125rem;">These methods are often confused because they all involve sending data to the server. The key difference lies in their purpose and how they affect the server's state. <strong>The `TRACE` method is not included here because it is a diagnostic tool, not a data-manipulation method.</strong></p>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3><i class="fas fa-upload" style="color: var(--post-color);"></i> POST (Create)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **create a new resource**.</li>
+                        <li><strong>Idempotent:</strong> **No**. Sending the same POST request twice will create two new, identical resources.</li>
+                        <li><strong>Example:</strong> Creating a new blog post. A form submission to `api/posts` creates a new entry.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-sync-alt" style="color: var(--put-color);"></i> PUT (Replace)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **fully replace** an existing resource.</li>
+                        <li><strong>Idempotent:</strong> **Yes**. Sending the same PUT request multiple times will have the same effect as sending it once.</li>
+                        <li><strong>Example:</strong> Updating an entire blog post. A request to `api/posts/123` with a new, complete body will replace the old post entirely.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-pen-nib" style="color: var(--patch-color);"></i> PATCH (Update)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **partially update** an existing resource.</li>
+                        <li><strong>Idempotent:</strong> **No**. It applies a change, so repeating it might have different results.</li>
+                        <li><strong>Example:</strong> Changing only the title of a blog post. A request to `api/posts/123` with only a `{"title": "New Title"}` payload will change only that field.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- -->
+        
+        <!-- New Comparison Section 2 -->
+        <section class="section-card">
+            <h2>The Difference Between GET & HEAD</h2>
+            <p style="font-size: 1.125rem;">These two methods are used for requesting information, but one is a lightweight version of the other. Think of it as peeking at a package before you open it.</p>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3><i class="fas fa-search" style="color: var(--get-color);"></i> GET (Get Everything)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **retrieve the entire resource**.</li>
+                        <li><strong>Includes Body:</strong> **Yes**. The server sends the full resource data (e.g., the HTML content of a page, a JSON file, or an image).</li>
+                        <li><strong>Example:</strong> Viewing a blog post. A request to `api/posts/123` will return the entire post, including its title, content, and author.</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3><i class="fas fa-info-circle" style="color: var(--head-color);"></i> HEAD (Get Headers Only)</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> To **retrieve only the headers** for a resource.</li>
+                        <li><strong>Includes Body:</strong> **No**. The server sends no body, only the headers (metadata) from the response.</li>
+                        <li><strong>Example:</strong> Checking if a blog post exists. A request to `api/posts/123` will return headers like `Content-Type` and `Last-Modified` without sending the full post content. This is useful for performance.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+
+        
+ <section class="section">
+            <h2>HTTP Methods in Action: Code and Concepts</h2>
+            <p>Select an HTTP method from the dropdown to see its explanation and a side-by-side code example for both the frontend (client) and backend (server), both written in JavaScript.</p>
+            <div class="interactive-form">
+                <select id="methodSelect" onchange="updateMethodContent()">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="OPTIONS">OPTIONS</option>
+                    <option value="TRACE">TRACE</option>
+                </select>
+            </div>
+            <div id="interactive-section">
+                <h3 id="methodTitle">GET Method</h3>
+                <p id="methodDescription">The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.</p>
+                <div class="method-explanation">
+                    <div class="code-block">
+                        <h4>Frontend (Client-side) JavaScript</h4>
+                        <pre id="frontendCode"><code>
+// Client requests data for post with ID 1
+fetch('/api/posts/1')
+    .then(response => response.json())
+    .then(data => console.log('GET response:', data));
+                        </code></pre>
+                    </div>
+                    <div class="code-block">
+                        <h4>Backend (Server-side) JavaScript</h4>
+                        <pre id="backendCode"><code>
+// A basic mock server to handle a GET request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = [{ id: 1, title: 'Example' }];
+
+app.get('/api/posts/:id', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+        res.status(200).json(post);
+    } else {
+        res.status(404).json({ message: 'Not Found' });
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2>Animated HTTP Methods Flow</h2>
+            <p>Select a method and watch the animated flow of how a request travels from the client to the server and back.</p>
+            <div class="interactive-form">
+                <select id="animationMethodSelect" onchange="animateMethod()">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                    <option value="HEAD">HEAD</option>
+                    <option value="OPTIONS">OPTIONS</option>
+                    <option value="TRACE">TRACE</option>
+                </select>
+            </div>
+            <div class="animation-container">
+                <div class="animation-scene">
+                    <div class="entity">Client</div>
+                    <div id="requestBox" class="request-box"></div>
+                    <div id="responseBox" class="response-box"></div>
+                    <div class="entity">Server</div>
+                </div>
+                <div class="result-box" id="animationResultBox">
+                    <h3>Animation Log:</h3>
+                    <p id="animationStatus">Select a method to begin the animation.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+
+
+
+
+        
     </main>
+
+
     
     <script>
         // Game State and functions
@@ -656,7 +1265,7 @@
             { prompt: 'Using a proxy server to create a secure connection to a website', method: 'CONNECT', correct: 'CONNECT', explanation: "The CONNECT method is specifically designed to establish a tunnel through a proxy server for secure connections, like with HTTPS." },
             { prompt: 'Testing what happens to a request message as it passes through proxies', method: 'TRACE', correct: 'TRACE', explanation: "The TRACE method sends a diagnostic request that gets echoed back to the client, allowing you to see if the message was altered by any intermediate servers." },
             { prompt: 'Changing the title of a post', method: 'PATCH', correct: 'PATCH', explanation: "Changing just the title is a partial update, which is the main use case for the PATCH method." },
-            { prompt: 'Changing your profile picture', method: 'POST', correct: 'POST', explanation: "You're sending new data to the server to be added to your profile. This is a POST request." },
+            { prompt: 'Changing your profile picture', method: 'POST', 'correct': 'POST', explanation: "You're sending new data to the server to be added to your profile. This is a POST request." },
             { prompt: 'Viewing a list of products in a category', method: 'GET', correct: 'GET', explanation: "You are simply requesting data to view, making it a GET request." },
             { prompt: 'Signing up for a new account', method: 'POST', correct: 'POST', explanation: "You are creating a new resource (your account) on the server, which requires a POST request." },
             { prompt: 'Updating your shipping address', method: 'PUT', correct: 'PUT', explanation: "You are replacing the old shipping address with a new one. This full replacement is a good use of the PUT method." },
@@ -866,10 +1475,832 @@
                 zone.classList.remove('border-solid');
             });
         });
+        
+        // --- New Dynamic Method Details Section ---
+        const methodSelectDropdown = document.getElementById('method-select-dropdown');
+        const methodExplanationArea = document.getElementById('method-explanation-area');
+
+        const methodDetails = {
+            get: {
+                title: 'GET: A Request for Information',
+                description: 'The **GET** method is used to retrieve data from a server. It is a "safe" method because it should not have any side effects on the server\'s state. GET requests can be bookmarked and are used for data that can be cached.',
+                scenario: 'Imagine you want to view a recipe on a website. Your browser sends a GET request to the server to fetch the recipe\'s page.',
+                frontendCode: `
+// Asynchronous function to fetch data from an API endpoint.
+async function getRecipe(recipeId) {
+    // The fetch() call makes a GET request by default.
+    const response = await fetch(\`/api/recipes?id=\${recipeId}\`); 
+    
+    // Check if the response was successful (status code 200-299).
+    if (!response.ok) {
+        // If not, throw an error to be caught later.
+        throw new Error('Failed to fetch recipe.');
+    }
+    
+    // Parse the JSON data from the response body.
+    const recipeData = await response.json();
+    
+    // Log the data to the console for a practical example.
+    console.log('Recipe Data:', recipeData);
+    
+    // Return the data for use in the application.
+    return recipeData;
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the GET request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# This route decorator specifies that this function handles GET requests to '/api/recipes'.
+@app.route('/api/recipes', methods=['GET'])
+def get_recipe():
+    # Get the 'id' query parameter from the URL (e.g., from '?id=123').
+    recipe_id = request.args.get('id')
+    
+    # In a real application, you would query a database for this ID.
+    if recipe_id == '123':
+        # If found, return the data as a JSON response with a 200 OK status.
+        return jsonify({
+            'id': '123',
+            'title': 'Spicy Tofu Stir-Fry',
+            'ingredients': ['Tofu', 'Broccoli', 'Soy Sauce', 'Ginger'],
+            'instructions': 'Stir-fry tofu until crispy. Add broccoli and seasonings. Serve hot.'
+        })
+    else:
+        # If the recipe is not found, return a 404 Not Found status with an error message.
+        return jsonify({'error': 'Recipe not found'}), 404
+
+if __name__ == '__main__':
+    # Run the Flask development server.
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Enter a recipe ID to simulate fetching a recipe. The URL will be "<strong>/api/recipes?id=<span id="get-url-id">123</span></strong>".</p>
+<div class="practical-controls">
+    <label for="get-recipe-id">Recipe ID:</label>
+    <input type="text" id="get-recipe-id" value="123">
+    <button id="send-request-btn">Send GET Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Request</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            post: {
+                title: 'POST: Creating a New Resource',
+                description: 'The **POST** method is used to submit data to a server to create a new resource. This is used for actions like submitting a form, uploading a file, or creating a new user account. POST requests are not idempotent; submitting the same request multiple times may create multiple identical resources.',
+                scenario: 'You are submitting a new blog post. The data you enter in the form is sent to the server with a POST request to create the post.',
+                frontendCode: `
+// Asynchronous function to create a new post.
+async function createPost(postData) {
+    // The fetch() call is configured with the POST method.
+    const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+            // Tell the server the request body is JSON.
+            'Content-Type': 'application/json'
+        },
+        // Convert the JavaScript object to a JSON string for the request body.
+        body: JSON.stringify(postData)
+    });
+    
+    // Check if the response was successful. POST usually returns 201 Created.
+    if (!response.ok) {
+        throw new Error('Failed to create post.');
+    }
+    
+    // Parse the JSON data from the response body.
+    const newPost = await response.json();
+    
+    // Log the created post data.
+    console.log('New Post Created:', newPost);
+    
+    return newPost;
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the POST request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# This route handles POST requests to '/api/posts'.
+@app.route('/api/posts', methods=['POST'])
+def create_post():
+    # Get the JSON data from the request body.
+    data = request.get_json()
+    title = data.get('title')
+    content = data.get('content')
+    
+    # In a real app, you would save this new data to a database.
+    new_post = {
+        'id': 'post-456', # The new unique ID assigned by the server.
+        'title': title,
+        'content': content,
+        'status': 'published'
+    }
+    # Return the new resource with a 201 Created status code.
+    return jsonify(new_post), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Enter a title and content for a new blog post and send it to the server. The URL will be "<strong>/api/posts</strong>".</p>
+<div class="practical-controls">
+    <label for="post-title">Title:</label>
+    <input type="text" id="post-title" value="My First Post">
+    <label for="post-content">Content:</label>
+    <textarea id="post-content" rows="4">This is the content of my brand new blog post.</textarea>
+    <button id="send-request-btn">Send POST Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            put: {
+                title: 'PUT: Replacing an Existing Resource',
+                description: 'The **PUT** method is used to update an existing resource by completely replacing its content with the data in the request payload. It is idempotent; sending the same PUT request multiple times will have the same effect as sending it once.',
+                scenario: 'You need to update your entire user profile, replacing the old data with new information like a changed name and email.',
+                frontendCode: `
+// Asynchronous function to update an existing profile.
+async function updateProfile(userId, profileData) {
+    // The fetch() URL includes the resource ID, and the method is set to PUT.
+    const response = await fetch(\`/api/users/\${userId}\`, {
+        method: 'PUT',
+        headers: {
+            // Tell the server the request body is JSON.
+            'Content-Type': 'application/json'
+        },
+        // Convert the JavaScript object to a JSON string.
+        body: JSON.stringify(profileData)
+    });
+    
+    // Check if the response was successful.
+    if (!response.ok) {
+        throw new Error('Failed to update profile.');
+    }
+    
+    // Parse the JSON data from the response body.
+    const updatedProfile = await response.json();
+    
+    // Log the updated profile data.
+    console.log('Profile Updated:', updatedProfile);
+    
+    return updatedProfile;
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the PUT request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# The URL contains a variable path segment for the user ID.
+@app.route('/api/users/<user_id>', methods=['PUT'])
+def update_user(user_id):
+    # Get the JSON data from the request body.
+    data = request.get_json()
+    new_name = data.get('name')
+    new_email = data.get('email')
+    
+    # In a real app, you would find the user by ID and replace their data.
+    if user_id == 'user123':
+        # Return the new resource with a 200 OK status.
+        return jsonify({
+            'id': user_id,
+            'name': new_name,
+            'email': new_email,
+            'status': 'updated'
+        })
+    else:
+        # If the user is not found, return a 404 Not Found status.
+        return jsonify({'error': 'User not found'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Update a user profile by replacing the existing data. The URL is "<strong>/api/users/user123</strong>".</p>
+<div class="practical-controls">
+    <label for="put-name">New Name:</label>
+    <input type="text" id="put-name" value="Jane Doe">
+    <label for="put-email">New Email:</label>
+    <input type="text" id="put-email" value="jane.doe@example.com">
+    <button id="send-request-btn">Send PUT Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            delete: {
+                title: 'DELETE: Removing a Resource',
+                description: 'The **DELETE** method is used to remove a specified resource from the server. It is idempotent, meaning deleting a resource that is already gone will not cause an error or change server state.',
+                scenario: 'You want to permanently delete an old photo from your social media account.',
+                frontendCode: `
+// Asynchronous function to delete a photo.
+async function deletePhoto(photoId) {
+    // The fetch() URL includes the resource ID, and the method is set to DELETE.
+    const response = await fetch(\`/api/photos/\${photoId}\`, {
+        method: 'DELETE'
+    });
+    
+    // Check if the response was successful (usually a 200 OK or 204 No Content).
+    if (!response.ok) {
+        throw new Error('Failed to delete photo.');
+    }
+    
+    // Log a success message since there is often no body in the response.
+    console.log('Photo Deleted:', photoId);
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the DELETE request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# The URL contains a variable path segment for the photo ID.
+@app.route('/api/photos/<photo_id>', methods=['DELETE'])
+def delete_photo(photo_id):
+    # In a real app, you would remove the photo from the database.
+    if photo_id == 'photo987':
+        # Return a success message with a 200 OK status.
+        return jsonify({'message': f'Photo {photo_id} has been deleted'}), 200
+    else:
+        # If the photo is not found, return a 404 Not Found status.
+        return jsonify({'error': 'Photo not found'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Simulate deleting a photo with ID "987". The URL is "<strong>/api/photos/photo987</strong>".</p>
+<div class="practical-controls">
+    <button id="send-request-btn">Send DELETE Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            patch: {
+                title: 'PATCH: Making a Partial Update',
+                description: 'The **PATCH** method is used to apply partial modifications to a resource. Unlike PUT, it only sends the data that needs to be changed, which can be more efficient for large resources.',
+                scenario: 'You want to change only the title of a blog post, not the entire content.',
+                frontendCode: `
+// Asynchronous function to partially update a blog post.
+async function patchPostTitle(postId, newTitle) {
+    // The fetch() URL includes the resource ID, and the method is set to PATCH.
+    const response = await fetch(\`/api/posts/\${postId}\`, {
+        method: 'PATCH',
+        headers: {
+            // Tell the server the request body is JSON.
+            'Content-Type': 'application/json'
+        },
+        // Only send the data that needs to be changed.
+        body: JSON.stringify({ title: newTitle })
+    });
+    
+    // Check if the response was successful.
+    if (!response.ok) {
+        throw new Error('Failed to patch post.');
+    }
+    
+    // Parse the JSON data from the response body.
+    const updatedPost = await response.json();
+    
+    // Log the updated post data.
+    console.log('Post Patched:', updatedPost);
+    
+    return updatedPost;
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the PATCH request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# The URL contains a variable path segment for the post ID.
+@app.route('/api/posts/<post_id>', methods=['PATCH'])
+def patch_post(post_id):
+    # Get the JSON data from the request body.
+    data = request.get_json()
+    new_title = data.get('title')
+
+    # In a real app, you would find the post and update only the 'title' field.
+    if post_id == 'post-456':
+        # Return the partially updated resource with a 200 OK status.
+        return jsonify({
+            'id': post_id,
+            'title': new_title,
+            'content': 'Original post content...',
+            'status': 'updated'
+        })
+    else:
+        # If the post is not found, return a 404 Not Found status.
+        return jsonify({'error': 'Post not found'}), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Simulate updating just the title of a post with ID "456". The URL is "<strong>/api/posts/post-456</strong>".</p>
+<div class="practical-controls">
+    <label for="patch-title">New Title:</label>
+    <input type="text" id="patch-title" value="My Updated Post Title">
+    <button id="send-request-btn">Send PATCH Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Request Payload</h5>
+    <pre id="request-payload"></pre>
+    <div style="margin-top: 1rem;"></div>
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            head: {
+                title: 'HEAD: Getting Headers Only',
+                description: 'The **HEAD** method is a "quick look" before you download. It asks for the headers of a resource, without the body. This is useful for checking if a resource exists, its size, or its last modified date without transferring the full content.',
+                scenario: 'Your browser checks if a large video file is up to date before trying to download it.',
+                frontendCode: `
+// Asynchronous function to get file headers.
+async function getFileHeaders(fileUrl) {
+    // The fetch() call is configured with the HEAD method.
+    const response = await fetch(fileUrl, {
+        method: 'HEAD'
+    });
+    
+    // Log the response status.
+    console.log('Status:', response.status);
+    
+    // Log the headers of interest. There is no body to read.
+    console.log('Content-Type:', response.headers.get('Content-Type'));
+    console.log('Content-Length:', response.headers.get('Content-Length'));
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the HEAD request.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# This route handles HEAD requests.
+@app.route('/api/files/<file_id>', methods=['HEAD'])
+def head_file(file_id):
+    # In a real app, you would check if the file exists and get its metadata.
+    if file_id == 'large-video.mp4':
+        # The return value includes an empty body and a dictionary of headers.
+        return ('', 200, {
+            'Content-Type': 'video/mp4',
+            'Content-Length': '50000000', # 50 MB example
+            'Last-Modified': 'Fri, 26 Aug 2024 12:00:00 GMT'
+        })
+    else:
+        # If the file is not found, return a 404 Not Found status.
+        return ('', 404)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Simulate checking the headers of a large video file to see its size. The URL is "<strong>/api/files/large-video.mp4</strong>".</p>
+<div class="practical-controls">
+    <button id="send-request-btn">Send HEAD Request</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            trace: {
+                title: 'TRACE: Tracing the Request Path',
+                description: 'The **TRACE** method is a diagnostic tool. It sends a request to a server and asks it to reflect the request back to the client. This allows you to see if any intermediate proxies or firewalls are modifying the request before it reaches the server.',
+                scenario: 'A network administrator uses TRACE to troubleshoot why a specific request is behaving unexpectedly, suspecting a proxy server is altering the data.',
+                frontendCode: `
+// Asynchronous function to perform a TRACE request.
+async function traceRequest(url) {
+    // Note: The fetch() API might not directly support TRACE in all environments
+    // or browsers for security reasons. This is a conceptual example.
+    const response = await fetch(url, {
+        method: 'TRACE'
+    });
+    
+    // Get the response body, which should contain the echoed request headers.
+    const tracedRequest = await response.text();
+    
+    // Log the headers for analysis.
+    console.log('Traced Request Headers:', tracedRequest);
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the TRACE request.
+# Flask does not natively handle TRACE, but a web server or proxy can.
+# This is a simulation of a server echoing back the request headers.
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route('/api/diagnostic', methods=['TRACE'])
+def trace_request():
+    headers = '\\n'.join([f'{key}: {value}' for key, value in request.headers.items()])
+    return f'HTTP/1.1 200 OK\\n{headers}\\n\\n', 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>Simulate sending a diagnostic TRACE request to "<strong>/api/diagnostic</strong>" to see the headers received by the server.</p>
+<div class="practical-controls">
+    <button id="send-request-btn">Simulate Connection</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Response</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            },
+            connect: {
+                title: 'CONNECT: Creating a Tunnel',
+                description: 'The **CONNECT** method is primarily used to establish a network tunnel, often to allow a client to connect to a secure website (HTTPS) through an unencrypted HTTP proxy. It instructs the proxy server to open a direct connection to the destination server on the client\'s behalf.',
+                scenario: 'When you try to access a secure banking website from a corporate network that uses an HTTP proxy, the CONNECT method is used to set up the secure channel.',
+                frontendCode: `
+// The fetch() API cannot directly make a CONNECT request.
+// This is typically handled at a lower level by the browser's networking stack
+// and a proxy server. This function explains the concept.
+function explainConnect() {
+    console.log('Client wants to connect to a secure server (e.g., https://bank.com)');
+    console.log('1. Client sends a CONNECT request to the proxy server:');
+    console.log('   CONNECT bank.com:443 HTTP/1.1');
+    console.log('2. The proxy establishes a TCP connection to bank.com on port 443.');
+    console.log('3. The proxy responds with "200 Connection established" and sets up a tunnel.');
+    console.log('4. The client now sends encrypted HTTPS traffic directly through this tunnel to bank.com.');
+}
+                `,
+                backendCode: `
+# Python (Flask) backend to handle the CONNECT request.
+# Flask cannot natively handle the CONNECT method as it's for proxy tunnels.
+# A web server like Apache or Nginx would handle this.
+# The server's role is simply to establish the tunnel.
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/api/connect', methods=['CONNECT'])
+def handle_connect():
+    # This function will not be reached in a typical Flask setup.
+    # The proxy server itself handles the CONNECT request.
+    return jsonify({'message': 'CONNECT request received, but handled by the proxy.'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+                `,
+                practical: `
+<p>The **CONNECT** method is a low-level protocol for proxies and cannot be demonstrated with a simple browser fetch call. Instead, click the button to see a simulated log of the connection process.</p>
+<div class="practical-controls">
+    <button id="send-request-btn">Simulate Connection</button>
+</div>
+<div class="response-area">
+    <h5>Simulated Log</h5>
+    <pre id="response-output"></pre>
+</div>
+                `
+            }
+        };
+
+        // Function to render content based on selected method
+        function renderMethodDetails(method) {
+            const data = methodDetails[method];
+            if (!data) return;
+
+            methodExplanationArea.innerHTML = `
+                <h3>${data.title}</h3>
+                <p>${data.description}</p>
+                <h4>Real-World Scenario:</h4>
+                <p>${data.scenario}</p>
+                
+                <div class="code-container">
+                    <h4>Front-End (JavaScript)</h4>
+                    <pre class="code-block">${data.frontendCode.trim()}</pre>
+                </div>
+                
+                <div class="code-container">
+                    <h4>Back-End (Python/Flask)</h4>
+                    <pre class="code-block">${data.backendCode.trim()}</pre>
+                </div>
+
+                <div class="practical-demo">
+                    <h4>Try It Yourself!</h4>
+                    ${data.practical}
+                </div>
+            `;
+            
+            // Re-attach event listener to the new button
+            const sendRequestBtn = document.getElementById('send-request-btn');
+            if (sendRequestBtn) {
+                sendRequestBtn.addEventListener('click', () => runPracticalDemo(method));
+            }
+        }
+
+        function runPracticalDemo(method) {
+            const outputArea = document.getElementById('response-output');
+            const requestPayloadArea = document.getElementById('request-payload');
+            
+            // Clear previous output
+            outputArea.textContent = 'Simulating request...';
+            if (requestPayloadArea) {
+                requestPayloadArea.textContent = 'Preparing payload...';
+            }
+
+            // Simulate a delay for a more realistic feel
+            setTimeout(() => {
+                let responseData;
+                let status;
+                let requestPayload = null;
+                
+                switch (method) {
+                    case 'get':
+                        const getRecipeId = document.getElementById('get-recipe-id').value;
+                        requestPayload = `GET /api/recipes?id=${getRecipeId}`;
+                        
+                        if (getRecipeId === '123') {
+                            responseData = {
+                                id: '123',
+                                title: 'Spicy Tofu Stir-Fry',
+                                ingredients: ['Tofu', 'Broccoli', 'Soy Sauce', 'Ginger'],
+                                instructions: 'Stir-fry tofu until crispy. Add broccoli and seasonings. Serve hot.'
+                            };
+                            status = '200 OK';
+                        } else {
+                            responseData = { error: 'Recipe not found' };
+                            status = '404 Not Found';
+                        }
+                        break;
+                    case 'post':
+                        const postTitle = document.getElementById('post-title').value;
+                        const postContent = document.getElementById('post-content').value;
+                        requestPayload = {
+                            title: postTitle,
+                            content: postContent
+                        };
+                        responseData = {
+                            id: 'post-456',
+                            title: postTitle,
+                            content: postContent,
+                            status: 'published'
+                        };
+                        status = '201 Created';
+                        break;
+                    case 'put':
+                        const newName = document.getElementById('put-name').value;
+                        const newEmail = document.getElementById('put-email').value;
+                        requestPayload = {
+                            name: newName,
+                            email: newEmail
+                        };
+                        responseData = {
+                            id: 'user123',
+                            name: newName,
+                            email: newEmail,
+                            status: 'updated'
+                        };
+                        status = '200 OK';
+                        break;
+                    case 'delete':
+                        responseData = { message: 'Photo photo987 has been deleted' };
+                        status = '200 OK';
+                        break;
+                    case 'patch':
+                        const newTitle = document.getElementById('patch-title').value;
+                        requestPayload = {
+                            title: newTitle
+                        };
+                        responseData = {
+                            id: 'post-456',
+                            title: newTitle,
+                            content: 'Original post content...',
+                            status: 'updated'
+                        };
+                        status = '200 OK';
+                        break;
+                    case 'head':
+                        responseData = {
+                            'Status': '200 OK',
+                            'Content-Type': 'video/mp4',
+                            'Content-Length': '50000000',
+                            'Last-Modified': 'Fri, 26 Aug 2024 12:00:00 GMT',
+                            'Note': 'No response body is sent with HEAD requests.'
+                        };
+                        status = '200 OK';
+                        break;
+                    case 'trace':
+                        responseData = {
+                            'Request-Method': 'TRACE',
+                            'Request-URL': '/api/diagnostic',
+                            'Host': 'localhost:3000',
+                            'User-Agent': navigator.userAgent,
+                            'Accept': '*/*',
+                            'Simulated-Note': 'This shows the request as the server received it.'
+                        };
+                        status = '200 OK';
+                        break;
+                    case 'connect':
+                        responseData = 'Connection established. Secure tunnel created.';
+                        status = '200 OK';
+                        break;
+                }
+                
+                // Display request payload if applicable
+                if (requestPayloadArea) {
+                    if (typeof requestPayload === 'object' && requestPayload !== null) {
+                        requestPayloadArea.textContent = JSON.stringify(requestPayload, null, 2);
+                    } else if (typeof requestPayload === 'string') {
+                         requestPayloadArea.textContent = requestPayload;
+                    } else {
+                        requestPayloadArea.textContent = 'No body sent with this request.';
+                    }
+                }
+
+                // Format and display the response
+                let formattedOutput = `Status: ${status}\n\n`;
+                if (typeof responseData === 'object' && responseData !== null) {
+                    formattedOutput += `Body:\n${JSON.stringify(responseData, null, 2)}`;
+                } else {
+                    formattedOutput += `Body:\n${responseData}`;
+                }
+                outputArea.textContent = formattedOutput;
+            }, 1000);
+        }
+
+        // Event listener for dropdown change
+        methodSelectDropdown.addEventListener('change', (e) => {
+            const selectedMethod = e.target.value;
+            renderMethodDetails(selectedMethod);
+        });
 
         window.onload = function() {
             setupGame();
+            renderMethodDetails('get'); // Render initial content for GET method
         };
+
+
+
+
+
+
+        const methodData = {
+        GET: {
+            title: "GET Method",
+            description: "The <code>GET</code> method is used to retrieve data from a server. It should not be used for any operation that changes the server's state. It's safe and idempotent.",
+            frontend: `
+// Client requests data for post with ID 1
+fetch('/api/posts/1')
+    .then(response => response.json())
+    .then(data => console.log('GET response:', data));
+            `,
+            backend: `
+// A basic mock server to handle a GET request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = [{ id: 1, title: 'Example' }];
+
+app.get('/api/posts/:id', (req, res) => {
+    const postId = parseInt(req.params.id);
+    const post = posts.find(p => p.id === postId);
+    if (post) {
+        res.status(200).json(post);
+    } else {
+        res.status(404).json({ message: 'Not Found' });
+    }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+            `
+        },
+        POST: {
+            title: "POST Method",
+            description: "The <code>POST</code> method is used to send data to the server to create a new resource.",
+            frontend: `
+// Client sends data to create a new post
+const newPost = { title: 'New Post', body: 'This is the body.' };
+fetch('/api/posts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newPost)
+})
+.then(response => response.json())
+.then(data => console.log('POST response:', data));
+            `,
+            backend: `
+// A basic mock server to handle a POST request
+// (Conceptual example using Node.js)
+const express = require('express');
+const app = express();
+const posts = []; // In a real app, this would be a database
+
+app.post('/api/posts', (req, res) => {
+    const newPost = { id: Date.now(), ...req.body };
+    posts.push(newPost);
+    res.status(201).json(newPost);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+            `
+        },
+        // Add the other methods as you had before (PUT, PATCH, DELETE, HEAD, OPTIONS, TRACE)…
+    };
+
+    // --- Update code block content when dropdown changes ---
+    function updateMethodContent() {
+        const selectElement = document.getElementById('methodSelect');
+        const selectedMethod = selectElement.value;
+        const data = methodData[selectedMethod];
+
+        document.getElementById('methodTitle').innerText = data.title;
+        document.getElementById('methodDescription').innerHTML = data.description;
+        document.getElementById('frontendCode').querySelector('code').innerText = data.frontend;
+        document.getElementById('backendCode').querySelector('code').innerText = data.backend;
+    }
+
+    // --- Animation Functions ---
+    function animateMethod() {
+        const method = document.getElementById('animationMethodSelect').value;
+        const requestBox = document.getElementById('requestBox');
+        const responseBox = document.getElementById('responseBox');
+        const statusText = document.getElementById('animationStatus');
+
+        // Reset animation
+        requestBox.style.animation = 'none';
+        responseBox.style.animation = 'none';
+        void requestBox.offsetWidth; // Trigger reflow
+        void responseBox.offsetWidth;
+
+        requestBox.style.opacity = '0';
+        responseBox.style.opacity = '0';
+        requestBox.innerText = '';
+        responseBox.innerText = '';
+
+        statusText.innerText = `Sending ${method} request...`;
+
+        // Request animation
+        setTimeout(() => {
+            requestBox.innerText = method;
+            requestBox.style.animation = 'sendRequest 2s ease-in-out forwards';
+        }, 100);
+
+        // Response animation
+        setTimeout(() => {
+            const response = getMethodResponse(method);
+            responseBox.innerText = response;
+            responseBox.style.animation = 'sendResponse 2s ease-in-out forwards';
+            statusText.innerText = `Server responded with ${response}!`;
+        }, 2100);
+    }
+
+    function getMethodResponse(method) {
+        switch (method) {
+            case 'GET': return '200 OK';
+            case 'POST': return '201 Created';
+            case 'PUT': return '200 OK';
+            case 'PATCH': return '200 OK';
+            case 'DELETE': return '204 No Content';
+            case 'HEAD': return '200 OK';
+            case 'OPTIONS': return '204 No Content';
+            case 'TRACE': return '200 OK';
+            default: return '...';
+        }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateMethodContent();
+    });
+
+
+
+
+        
     </script>
 </body>
 </html>

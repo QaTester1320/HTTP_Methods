@@ -40,15 +40,42 @@ element.style {
 }
 
     body {font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(120deg,#f5f7fa,#c3cfe2);margin:0;}
+
+.back a {
+    color: blue;
+    font-weight: 700;
+    display: inline-block; /* Make it block-like to apply width and centering */
+    text-align: center;
+    width: 100px; /* Set a fixed width */
+    padding: 10px; /* Optional, to add space inside the box */
+    text-decoration: none; /* Remove underline */
+}
+
+.back a:hover {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    cursor: url('https://qatester1320.github.io/HTTP_Methods/pointinghand.svg') 16 16, pointer;
+}
+
+.back {
+    display: flex;
+    justify-content: center; /* Center the link horizontally */
+    align-items: center; /* Center the link vertically (if container has height) */
+    height: 10vh; /* Optional, if you want to center it vertically on the page */
+}
+
+
     h1 {color:#3366cc;text-align:center;margin-top:30px;letter-spacing:1px;font-size:2.3em;}
     h2 {color:#354c7c;margin-top:20px;}
     .section {max-width:650px;margin:35px auto 0 auto;background:rgba(255,255,255,0.73);border-radius:18px;padding:22px 15px 25px 15px;box-shadow:0px 8px 26px #acccdd44;}
-    .methods {display:flex;flex-wrap:wrap;gap:19px;justify-content:center;margin:28px 0 12px 0;}
+    .methods {display:flex;flex-wrap:wrap;gap:19px;justify-content:center;margin:28px 0 12px 0; }
     .card {background:white;border-radius:16px;box-shadow:0px 6px 18px #aaccdd77;padding:22px;width:260px;max-width:96vw;transition:transform 0.15s;}
     .card:hover {transform:scale(1.06) rotate(-2deg);box-shadow:0px 14px 30px #aaccdd88;}
     .card h2 {color:#28a745;font-size:1.3em;margin-bottom:8px;}
     .card p {color:#333;margin-bottom:10px;font-size:1.07em;}
-    button {background:#3366cc;color:white;border:none;border-radius:5px;padding:7px 17px;cursor:pointer;font-size:1em;font-weight:bold;margin:7px 3px 2px 0;box-shadow:0px 2px 8px #3366cc33;transition:background 0.12s;}
+    button {background:#3366cc;color:white;border:none;border-radius:5px;padding:7px 17px;cursor:pointer;font-size:1em;font-weight:bold;margin:7px 3px 2px 0;box-shadow:0px 2px 8px #3366cc33;transition:background 0.12s;cursor: url('https://qatester1320.github.io/HTTP_Methods/pointinghand.svg') 16 16, pointer;}
     button:active {background:#2853a0;}
     .badge {background:#ffe911;border-radius:50px;color:#222;font-weight:bold;padding:3px 10px;font-size:0.93em;display:inline-block;margin-left:2px;}
     .example {font-size:0.97em;color:#cc7700;}
@@ -66,6 +93,9 @@ element.style {
   </style>
 </head>
 <body>
+    <div class="back">
+    <a href="https://qatester1320.github.io/HTTP_Methods/">BACK</a>
+    </div>
 <h1>🕹️ HTTP Methods Playground & Learning Games</h1>
 <div class="section">
   <h2>🔎 What is HTTP?</h2>
